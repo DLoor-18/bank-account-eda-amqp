@@ -2,18 +2,18 @@ package ec.com.sofka.mapper;
 
 import ec.com.sofka.data.UserRequestDTO;
 import ec.com.sofka.data.UserResponseDTO;
-import ec.com.sofka.requests.UserRequest;
-import ec.com.sofka.responses.UserResponse;
+import ec.com.sofka.commands.UserCommand;
+import ec.com.sofka.queries.responses.UserResponse;
 import ec.com.sofka.utils.enums.StatusEnum;
 
 public class UserModelMapper {
 
-    public static UserRequest mapToRequest(UserRequestDTO user) {
+    public static UserCommand mapToRequest(UserRequestDTO user) {
         if (user == null) {
             return null;
         }
 
-        return new UserRequest(
+        return new UserCommand(
                 user.getFirstName(),
                 user.getLastName(),
                 user.getIdentityCard(),

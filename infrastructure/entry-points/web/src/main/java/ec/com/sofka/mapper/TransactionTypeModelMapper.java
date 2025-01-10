@@ -2,20 +2,20 @@ package ec.com.sofka.mapper;
 
 import ec.com.sofka.data.TransactionTypeRequestDTO;
 import ec.com.sofka.data.TransactionTypeResponseDTO;
-import ec.com.sofka.requests.TransactionTypeRequest;
-import ec.com.sofka.responses.TransactionTypeResponse;
+import ec.com.sofka.commands.TransactionTypeCommand;
+import ec.com.sofka.queries.responses.TransactionTypeResponse;
 import ec.com.sofka.utils.enums.StatusEnum;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TransactionTypeModelMapper {
 
-    public static TransactionTypeRequest mapToRequest(TransactionTypeRequestDTO transactionType) {
+    public static TransactionTypeCommand mapToRequest(TransactionTypeRequestDTO transactionType) {
         if (transactionType == null) {
             return null;
         }
 
-        return new TransactionTypeRequest(
+        return new TransactionTypeCommand(
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue(),

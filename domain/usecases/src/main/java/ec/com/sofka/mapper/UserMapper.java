@@ -2,11 +2,12 @@ package ec.com.sofka.mapper;
 
 import ec.com.sofka.aggregate.entities.user.values.objects.Email;
 import ec.com.sofka.aggregate.entities.user.values.objects.Password;
+import ec.com.sofka.aggregate.events.UserCreated;
 import ec.com.sofka.gateway.dto.UserDTO;
 import ec.com.sofka.aggregate.entities.user.User;
 import ec.com.sofka.aggregate.entities.user.values.UserId;
 import ec.com.sofka.aggregate.entities.user.values.objects.IdentityCard;
-import ec.com.sofka.responses.UserResponse;
+import ec.com.sofka.queries.responses.UserResponse;
 
 public class UserMapper {
 
@@ -64,6 +65,22 @@ public class UserMapper {
                 user.getIdentityCard().getValue(),
                 user.getEmail().getValue(),
                 user.getPassword().getValue(),
+                user.getStatus()
+        );
+    }
+
+    public static UserDTO mapToDTOFromEvent(UserCreated user) {
+        if (user == null) {
+            return null;
+        }
+
+        return new UserDTO(
+                user.getUserId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getIdentityCard(),
+                user.getEmail(),
+                user.getPassword(),
                 user.getStatus()
         );
     }

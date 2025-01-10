@@ -2,20 +2,20 @@ package ec.com.sofka.mapper;
 
 import ec.com.sofka.data.AccountRequestDTO;
 import ec.com.sofka.data.AccountResponseDTO;
-import ec.com.sofka.requests.AccountRequest;
-import ec.com.sofka.responses.AccountResponse;
+import ec.com.sofka.commands.AccountCommand;
+import ec.com.sofka.queries.responses.AccountResponse;
 import ec.com.sofka.utils.enums.StatusEnum;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AccountModelMapper {
 
-    public static AccountRequest mapToRequest(AccountRequestDTO account) {
+    public static AccountCommand mapToRequest(AccountRequestDTO account) {
         if (account == null) {
             return null;
         }
 
-        return new AccountRequest(
+        return new AccountCommand(
                 account.getAccountNumber(),
                 account.getBalance(),
                 StatusEnum.valueOf(account.getStatus()),

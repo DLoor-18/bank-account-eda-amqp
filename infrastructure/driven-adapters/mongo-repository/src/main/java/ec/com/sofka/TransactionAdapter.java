@@ -4,7 +4,6 @@ import ec.com.sofka.database.account.ITransactionRepository;
 import ec.com.sofka.gateway.TransactionRepository;
 import ec.com.sofka.gateway.dto.TransactionDTO;
 import ec.com.sofka.mapper.TransactionEntityMapper;
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -12,11 +11,9 @@ import reactor.core.publisher.Mono;
 @Repository
 public class TransactionAdapter implements TransactionRepository {
     private final ITransactionRepository transactionRepository;
-    private final ReactiveMongoTemplate accountReactiveMongoTemplate;
 
-    public TransactionAdapter(ITransactionRepository transactionRepository, ReactiveMongoTemplate accountReactiveMongoTemplate) {
+    public TransactionAdapter(ITransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
-        this.accountReactiveMongoTemplate = accountReactiveMongoTemplate;
     }
 
     @Override

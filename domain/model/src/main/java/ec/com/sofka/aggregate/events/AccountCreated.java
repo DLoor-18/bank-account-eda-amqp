@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.aggregate.entities.user.User;
-import ec.com.sofka.utils.enums.EventsEnum;
+import ec.com.sofka.utils.enums.EventsDetailsEnum;
 import ec.com.sofka.utils.enums.StatusEnum;
 
 import java.math.BigDecimal;
@@ -19,7 +19,7 @@ public class AccountCreated extends DomainEvent {
     private User user;
 
     public AccountCreated(String accountId, String accountNumber, BigDecimal balance, StatusEnum status, User user) {
-        super(EventsEnum.ACCOUNT_CREATED.name());
+        super(EventsDetailsEnum.ACCOUNT_CREATED.getEventType());
         this.accountId = accountId;
         this.accountNumber = accountNumber;
         this.balance = balance;
@@ -28,7 +28,7 @@ public class AccountCreated extends DomainEvent {
     }
 
     public AccountCreated() {
-        super(EventsEnum.ACCOUNT_CREATED.name());
+        super(EventsDetailsEnum.ACCOUNT_CREATED.getEventType());
     }
 
     public String getAccountId() {

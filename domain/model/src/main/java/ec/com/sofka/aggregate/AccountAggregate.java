@@ -64,10 +64,11 @@ public class AccountAggregate extends AggregateRoot<AccountAggregateId> {
 
     public static AccountAggregate from(final String id, List<DomainEvent> events) {
         AccountAggregate accountAggregate = new AccountAggregate(id);
-        events.forEach((event) -> accountAggregate.addEvent(event).apply());
         events.stream()
                 .filter(event -> id.equals(event.getAggregateRootId()))
-                .forEach((event) -> accountAggregate.addEvent(event).apply());
+                .reduce((first, second) -> second)
+                .ifPresent(event -> accountAggregate.addEvent(event).apply());
+        accountAggregate.markEventsAsCommitted();
         return accountAggregate;
     }
 

@@ -2,6 +2,7 @@ package ec.com.sofka.cases.user;
 
 import ec.com.sofka.User;
 import ec.com.sofka.gateway.UserRepository;
+import ec.com.sofka.queries.query.user.FindUserByCiUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

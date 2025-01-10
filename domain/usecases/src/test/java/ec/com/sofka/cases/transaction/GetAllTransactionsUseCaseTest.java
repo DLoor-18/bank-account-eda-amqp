@@ -3,6 +3,7 @@ package ec.com.sofka.cases.transaction;
 
 import ec.com.sofka.Transaction;
 import ec.com.sofka.gateway.TransactionRepository;
+import ec.com.sofka.queries.query.transaction.GetAllTransactionsUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

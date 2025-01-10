@@ -1,9 +1,9 @@
 package ec.com.sofka.mapper;
 
+import ec.com.sofka.aggregate.events.TransactionCreated;
 import ec.com.sofka.gateway.dto.TransactionDTO;
 import ec.com.sofka.aggregate.entities.transaction.Transaction;
-import ec.com.sofka.requests.TransactionRequest;
-import ec.com.sofka.responses.TransactionResponse;
+import ec.com.sofka.queries.responses.TransactionResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -37,5 +37,20 @@ public class TransactionMapper {
                 TransactionTypeMapper.mapToResponseFromDTO(transaction.getTransactionType()));
     }
 
+
+    public static TransactionDTO mapToDTOFromEvent(TransactionCreated transaction) {
+        if (transaction == null) {
+            return null;
+        }
+
+        return new TransactionDTO(
+                transaction.getTransactionId(),
+                transaction.getAccountNumber(),
+                transaction.getDetails(),
+                transaction.getAmount(),
+                transaction.getProcessingDate(),
+                AccountMapper.mapToDTOFromModel(transaction.getAccount()),
+                TransactionTypeMapper.mapToDTOFromModel(transaction.getTransactionType()));
+    }
 
 }

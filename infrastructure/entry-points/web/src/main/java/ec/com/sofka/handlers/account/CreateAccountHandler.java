@@ -1,6 +1,6 @@
 package ec.com.sofka.handlers.account;
 
-import ec.com.sofka.cases.account.CreateAccountUseCase;
+import ec.com.sofka.commands.usecases.account.CreateAccountUseCase;
 import ec.com.sofka.data.AccountRequestDTO;
 import ec.com.sofka.data.AccountResponseDTO;
 import ec.com.sofka.mapper.AccountModelMapper;

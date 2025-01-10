@@ -5,7 +5,6 @@ import ec.com.sofka.data.UserResponseDTO;
 import ec.com.sofka.exception.RequestValidator;
 import ec.com.sofka.exception.model.ErrorDetails;
 import ec.com.sofka.handlers.user.CreateUserHandler;
-import ec.com.sofka.handlers.user.GetAllUsersHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,12 +28,10 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 @Configuration
 public class UserRouter {
     private final RequestValidator requestValidator;
-    private final GetAllUsersHandler getAllUsersHandler;
     private final CreateUserHandler createUserHandler;
 
-    public UserRouter(RequestValidator requestValidator, GetAllUsersHandler handler, CreateUserHandler createUserHandler) {
+    public UserRouter(RequestValidator requestValidator, CreateUserHandler createUserHandler) {
         this.requestValidator = requestValidator;
-        this.getAllUsersHandler = handler;
         this.createUserHandler = createUserHandler;
     }
 
@@ -83,40 +80,40 @@ public class UserRouter {
                             }
                     )
             ),
-            @RouterOperation(
-                    path = "/api/users",
-                    method = RequestMethod.GET,
-                    beanClass = GetAllUsersHandler.class,
-                    beanMethod = "getAllUsers",
-                    operation = @Operation(
-                            tags = {"Users"},
-                            operationId = "getAllUsers",
-                            summary = "Get all users",
-                            description = "Get all registered users.",
-                            responses = {
-                                    @ApiResponse(
-                                            responseCode = "200",
-                                            description = "Successfully obtained all registered users.",
-                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))
-                                    ),
-                                    @ApiResponse(
-                                            responseCode = "400",
-                                            description = "Bad request.",
-                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-                                    ),
-                                    @ApiResponse(
-                                            responseCode = "500",
-                                            description = "Internal application problems.",
-                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-                                    )
-                            }
-                    )
-            )
+//            @RouterOperation(
+//                    path = "/api/users",
+//                    method = RequestMethod.GET,
+//                    beanClass = GetAllUsersHandler.class,
+//                    beanMethod = "getAllUsers",
+//                    operation = @Operation(
+//                            tags = {"Users"},
+//                            operationId = "getAllUsers",
+//                            summary = "Get all users",
+//                            description = "Get all registered users.",
+//                            responses = {
+//                                    @ApiResponse(
+//                                            responseCode = "200",
+//                                            description = "Successfully obtained all registered users.",
+//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))
+//                                    ),
+//                                    @ApiResponse(
+//                                            responseCode = "400",
+//                                            description = "Bad request.",
+//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+//                                    ),
+//                                    @ApiResponse(
+//                                            responseCode = "500",
+//                                            description = "Internal application problems.",
+//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+//                                    )
+//                            }
+//                    )
+//            )
     })
     public RouterFunction<ServerResponse> usersRouters() {
         return RouterFunctions
-                .route(POST("/api/users").and(accept(APPLICATION_JSON)), this::saveUser)
-                .andRoute(GET("/api/users"), this::allUsers);
+                .route(POST("/api/users").and(accept(APPLICATION_JSON)), this::saveUser);
+//                .andRoute(GET("/api/users"), this::allUsers);
     }
 
     public Mono<ServerResponse> saveUser(ServerRequest request) {
@@ -128,13 +125,13 @@ public class UserRouter {
 
     }
 
-    public Mono<ServerResponse> allUsers(ServerRequest request) {
-        return getAllUsersHandler.getAllUsers()
-                .collectList()
-                .flatMap(list -> ServerResponse.ok()
-                        .contentType(APPLICATION_JSON)
-                        .bodyValue(list)
-                );
-    }
+//    public Mono<ServerResponse> allUsers(ServerRequest request) {
+//        return getAllUsersHandler.getAllUsers()
+//                .collectList()
+//                .flatMap(list -> ServerResponse.ok()
+//                        .contentType(APPLICATION_JSON)
+//                        .bodyValue(list)
+//                );
+//    }
 
 }

@@ -1,10 +1,11 @@
 package ec.com.sofka.mapper;
 
+import ec.com.sofka.aggregate.events.TransactionTypeCreated;
 import ec.com.sofka.aggregate.values.objects.Amount;
 import ec.com.sofka.gateway.dto.TransactionTypeDTO;
 import ec.com.sofka.aggregate.entities.transactionType.TransactionType;
 import ec.com.sofka.aggregate.entities.transactionType.values.TransactionTypeId;
-import ec.com.sofka.responses.TransactionTypeResponse;
+import ec.com.sofka.queries.responses.TransactionTypeResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -62,6 +63,21 @@ public class TransactionTypeMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue().getValue(),
+                transactionType.getDiscount(),
+                transactionType.getDiscount(),
+                transactionType.getStatus()
+        );
+    }
+
+    public static TransactionTypeDTO mapToDTOFromEvent(TransactionTypeCreated transactionType) {
+        if (transactionType == null) {
+            return null;
+        }
+        return new TransactionTypeDTO(
+                transactionType.getTransactionTypeId(),
+                transactionType.getType(),
+                transactionType.getDescription(),
+                transactionType.getValue(),
                 transactionType.getDiscount(),
                 transactionType.getDiscount(),
                 transactionType.getStatus()

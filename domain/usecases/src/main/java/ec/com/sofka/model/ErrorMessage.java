@@ -5,12 +5,12 @@ import java.time.format.DateTimeFormatter;
 
 public class ErrorMessage {
     private String error;
-    private String proccess;
+    private String process;
     private String date;
 
-    public ErrorMessage(String error, String proccess) {
+    public ErrorMessage(String error, String process) {
         this.error = error;
-        this.proccess = proccess;
+        this.process = process;
         this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
@@ -22,12 +22,12 @@ public class ErrorMessage {
         this.error = error;
     }
 
-    public String getProccess() {
-        return proccess;
+    public String getProcess() {
+        return process;
     }
 
-    public void setProccess(String proccess) {
-        this.proccess = proccess;
+    public void setProcess(String process) {
+        this.process = process;
     }
 
     public String getDate() {

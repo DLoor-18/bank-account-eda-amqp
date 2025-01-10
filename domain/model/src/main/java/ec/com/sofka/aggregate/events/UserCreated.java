@@ -1,7 +1,7 @@
 package ec.com.sofka.aggregate.events;
 
 import ec.com.sofka.generics.domain.DomainEvent;
-import ec.com.sofka.utils.enums.EventsEnum;
+import ec.com.sofka.utils.enums.EventsDetailsEnum;
 import ec.com.sofka.utils.enums.StatusEnum;
 
 public class UserCreated extends DomainEvent {
@@ -14,7 +14,7 @@ public class UserCreated extends DomainEvent {
     private StatusEnum status;
 
     public UserCreated(String userId, String firstName, String lastName, String identityCard, String email, String password, StatusEnum status) {
-        super(EventsEnum.USER_CREATED.name());
+        super(EventsDetailsEnum.USER_CREATED.getEventType());
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,7 +25,7 @@ public class UserCreated extends DomainEvent {
     }
 
     public UserCreated(){
-        super(EventsEnum.USER_CREATED.name());
+        super(EventsDetailsEnum.USER_CREATED.getEventType());
     }
 
     public String getUserId() {

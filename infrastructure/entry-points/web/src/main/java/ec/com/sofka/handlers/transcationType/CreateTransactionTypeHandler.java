@@ -1,6 +1,6 @@
 package ec.com.sofka.handlers.transcationType;
 
-import ec.com.sofka.cases.transcationType.CreateTransactionTypeUseCase;
+import ec.com.sofka.commands.usecases.transactionType.CreateTransactionTypeUseCase;
 import ec.com.sofka.data.TransactionTypeRequestDTO;
 import ec.com.sofka.data.TransactionTypeResponseDTO;
 import ec.com.sofka.mapper.TransactionTypeModelMapper;

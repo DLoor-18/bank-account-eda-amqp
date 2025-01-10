@@ -1,7 +1,7 @@
 package ec.com.sofka.cases.transactionType;
 
 import ec.com.sofka.TransactionType;
-import ec.com.sofka.cases.transcationType.CreateTransactionTypeUseCase;
+import ec.com.sofka.commands.usecases.transactionType.CreateTransactionTypeUseCase;
 import ec.com.sofka.gateway.TransactionTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

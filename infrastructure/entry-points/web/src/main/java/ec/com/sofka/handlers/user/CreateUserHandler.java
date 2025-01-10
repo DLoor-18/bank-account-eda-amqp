@@ -1,6 +1,6 @@
 package ec.com.sofka.handlers.user;
 
-import ec.com.sofka.cases.user.CreateUserUseCase;
+import ec.com.sofka.commands.usecases.user.CreateUserUseCase;
 import ec.com.sofka.data.UserRequestDTO;
 import ec.com.sofka.data.UserResponseDTO;
 import ec.com.sofka.mapper.UserModelMapper;

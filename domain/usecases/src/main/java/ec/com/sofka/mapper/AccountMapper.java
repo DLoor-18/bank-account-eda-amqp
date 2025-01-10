@@ -1,11 +1,13 @@
 package ec.com.sofka.mapper;
 
+import ec.com.sofka.aggregate.events.AccountCreated;
+import ec.com.sofka.aggregate.events.AccountUpdated;
 import ec.com.sofka.aggregate.values.objects.Amount;
 import ec.com.sofka.gateway.dto.AccountDTO;
 import ec.com.sofka.aggregate.entities.account.Account;
 import ec.com.sofka.aggregate.entities.account.values.AccountId;
 import ec.com.sofka.aggregate.entities.account.values.objects.AccountNumber;
-import ec.com.sofka.responses.AccountResponse;
+import ec.com.sofka.queries.responses.AccountResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -59,6 +61,32 @@ public class AccountMapper {
                 account.getBalance().getValue(),
                 account.getStatus(),
                 account.getUser() != null ? UserMapper.mapToDTOFromModel(account.getUser()) : null);
+    }
+
+    public static AccountDTO mapToDTOFromCreatedEvent(AccountCreated account) {
+        if (account == null) {
+            return null;
+        }
+
+        return new AccountDTO(
+                account.getAccountId(),
+                account.getAccountNumber(),
+                account.getBalance(),
+                account.getStatus(),
+                UserMapper.mapToDTOFromModel(account.getUser()));
+    }
+
+    public static AccountDTO mapToDTOFromUpdatesEvent(AccountUpdated account) {
+        if (account == null) {
+            return null;
+        }
+
+        return new AccountDTO(
+                account.getAccountId(),
+                account.getAccountNumber(),
+                account.getBalance(),
+                account.getStatus(),
+                UserMapper.mapToDTOFromModel(account.getUser()));
     }
 
 }

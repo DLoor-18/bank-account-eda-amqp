@@ -2,6 +2,7 @@ package ec.com.sofka.cases.account;
 
 import ec.com.sofka.Account;
 import ec.com.sofka.gateway.AccountRepository;
+import ec.com.sofka.queries.query.account.FindAccountByNumberUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

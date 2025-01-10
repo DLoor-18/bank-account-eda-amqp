@@ -2,19 +2,19 @@ package ec.com.sofka.mapper;
 
 import ec.com.sofka.data.TransactionRequestDTO;
 import ec.com.sofka.data.TransactionResponseDTO;
-import ec.com.sofka.requests.TransactionRequest;
-import ec.com.sofka.responses.TransactionResponse;
+import ec.com.sofka.commands.TransactionCommand;
+import ec.com.sofka.queries.responses.TransactionResponse;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TransactionModelMapper {
 
-    public static TransactionRequest mapToRequest(TransactionRequestDTO transaction) {
+    public static TransactionCommand mapToRequest(TransactionRequestDTO transaction) {
         if (transaction == null) {
             return null;
         }
 
-        return new TransactionRequest(
+        return new TransactionCommand(
                 transaction.getAmount(),
                 transaction.getProcessingDate(),
                 transaction.getDetails(),

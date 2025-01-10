@@ -1,6 +1,7 @@
 package ec.com.sofka.cases.account;
 
 import ec.com.sofka.Account;
+import ec.com.sofka.commands.usecases.account.CreateAccountUseCase;
 import ec.com.sofka.gateway.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

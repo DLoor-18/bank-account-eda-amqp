@@ -1,7 +1,7 @@
 package ec.com.sofka.aggregate.events;
 
 import ec.com.sofka.generics.domain.DomainEvent;
-import ec.com.sofka.utils.enums.EventsEnum;
+import ec.com.sofka.utils.enums.EventsDetailsEnum;
 import ec.com.sofka.utils.enums.StatusEnum;
 
 import java.math.BigDecimal;
@@ -16,7 +16,7 @@ public class TransactionTypeCreated extends DomainEvent {
     private StatusEnum status;
 
     public TransactionTypeCreated(String transactionTypeId, String type, String description, BigDecimal value, Boolean transactionCost, Boolean discount, StatusEnum status) {
-        super(EventsEnum.TRANSACTION_TYPE_CREATED.name());
+        super(EventsDetailsEnum.TRANSACTION_TYPE_CREATED.getEventType());
         this.transactionTypeId = transactionTypeId;
         this.type = type;
         this.description = description;
@@ -27,7 +27,7 @@ public class TransactionTypeCreated extends DomainEvent {
     }
 
     public TransactionTypeCreated(){
-        super(EventsEnum.TRANSACTION_TYPE_CREATED.name());
+        super(EventsDetailsEnum.TRANSACTION_TYPE_CREATED.getEventType());
     }
 
     public String getTransactionTypeId() {

@@ -3,6 +3,7 @@ package ec.com.sofka.cases.transaction;
 import ec.com.sofka.Account;
 import ec.com.sofka.Transaction;
 import ec.com.sofka.TransactionType;
+import ec.com.sofka.commands.usecases.transaction.CreateTransactionUseCase;
 import ec.com.sofka.gateway.AccountRepository;
 import ec.com.sofka.gateway.TransactionRepository;
 import ec.com.sofka.rules.BalanceCalculator;

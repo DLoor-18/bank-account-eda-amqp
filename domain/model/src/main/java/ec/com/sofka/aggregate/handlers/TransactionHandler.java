@@ -15,7 +15,7 @@ public class TransactionHandler extends DomainActionsContainer {
         addDomainActions((TransactionCreated event) -> {
             Transaction transaction = new Transaction(
                     TransactionId.of(event.getTransactionId()),
-                    TransactionAccount.of(event.getTransactionAccount()),
+                    TransactionAccount.of(event.getAccountNumber()),
                     event.getDetails(),
                     Amount.of(event.getAmount()),
                     ProcessingDate.of(event.getProcessingDate()),
