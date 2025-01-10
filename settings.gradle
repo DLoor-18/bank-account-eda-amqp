@@ -29,3 +29,6 @@ findProject(':app-consumer').projectDir = file('./applications/app-consumer')
 
 include ':app-config'
 findProject(':app-config').projectDir = file('./shared/app-config')
+
+include ':app-security'
+findProject(':app-security').projectDir = file('./shared/app-security')

@@ -19,7 +19,6 @@ public class EventsBusAdapter implements EventBusMessage {
         this.environment = environment;
     }
 
-
     @Override
     public void sendEvent(DomainEvent event) {
         EventsDetailsEnum eventsDetails = EventsDetailsEnum.findByEventType(event.getEventType());
