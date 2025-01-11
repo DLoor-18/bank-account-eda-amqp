@@ -19,8 +19,7 @@ public class AccountModelMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 StatusEnum.valueOf(account.getStatus()),
-                null,
-                account.getUserAggregateId()
+                account.getCustomerAggregateId()
     );
 
     }
@@ -34,7 +33,7 @@ public class AccountModelMapper {
                 account.getNumber(),
                 account.getBalance(),
                 account.getStatus().name(),
-                UserModelMapper.mapToDTO(account.getUser())
+                CustomerModelMapper.mapToDTO(account.getUser())
         );
     }
 

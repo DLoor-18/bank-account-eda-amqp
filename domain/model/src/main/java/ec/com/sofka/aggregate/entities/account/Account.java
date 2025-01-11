@@ -4,21 +4,21 @@ import ec.com.sofka.aggregate.entities.account.values.AccountId;
 import ec.com.sofka.aggregate.entities.account.values.objects.AccountNumber;
 import ec.com.sofka.aggregate.values.objects.Amount;
 import ec.com.sofka.generics.shared.Entity;
-import ec.com.sofka.aggregate.entities.user.User;
+import ec.com.sofka.aggregate.entities.customer.Customer;
 import ec.com.sofka.utils.enums.StatusEnum;
 
 public class Account extends Entity<AccountId> {
     private final AccountNumber accountNumber;
     private Amount balance;
     private StatusEnum status;
-    private User user;
+    private Customer customer;
 
-    public Account(AccountId id, AccountNumber accountNumber, Amount balance, StatusEnum status, User user ) {
+    public Account(AccountId id, AccountNumber accountNumber, Amount balance, StatusEnum status, Customer customer) {
         super(id);
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.user = user;
+        this.customer = customer;
     }
 
     public AccountNumber getAccountNumber() {
@@ -41,11 +41,11 @@ public class Account extends Entity<AccountId> {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public Customer getUser() {
+        return customer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Customer customer) {
+        this.customer = customer;
     }
 }

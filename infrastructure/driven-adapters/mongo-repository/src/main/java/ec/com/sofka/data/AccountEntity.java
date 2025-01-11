@@ -24,25 +24,25 @@ public class AccountEntity {
     @Field(name = "status")
     private StatusEnum status;
 
-    @Field(name = "user")
-    private UserEntity user;
+    @Field(name = "customer")
+    private CustomerEntity customer;
 
     public AccountEntity() {
     }
 
-    public AccountEntity(String accountNumber, BigDecimal balance, StatusEnum status, UserEntity user) {
+    public AccountEntity(String accountNumber, BigDecimal balance, StatusEnum status, CustomerEntity customer) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.user = user;
+        this.customer = customer;
     }
 
-    public AccountEntity(String id, String accountNumber, BigDecimal balance, StatusEnum status, UserEntity user) {
+    public AccountEntity(String id, String accountNumber, BigDecimal balance, StatusEnum status, CustomerEntity customer) {
         this.id = id;
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.user = user;
+        this.customer = customer;
     }
 
     public String getId() {
@@ -77,11 +77,11 @@ public class AccountEntity {
         this.status = status;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
-    public void setUser(UserEntity userEntity) {
-        this.user = userEntity;
+    public void setCustomer(CustomerEntity customerEntity) {
+        this.customer = customerEntity;
     }
 }

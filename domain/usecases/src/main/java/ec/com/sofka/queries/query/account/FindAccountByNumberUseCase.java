@@ -2,7 +2,7 @@ package ec.com.sofka.queries.query.account;
 
 import ec.com.sofka.aggregate.AccountAggregate;
 import ec.com.sofka.aggregate.entities.account.Account;
-import ec.com.sofka.exception.RecordNotFoundException;
+import ec.com.sofka.exceptions.RecordNotFoundException;
 import ec.com.sofka.gateway.busMessage.ErrorBusMessage;
 import ec.com.sofka.gateway.IEventStore;
 import ec.com.sofka.generics.interfaces.IUseCaseGetElement;

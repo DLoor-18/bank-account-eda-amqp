@@ -1,0 +1,14 @@
+dependencies {
+
+    implementation project(':usecases')
+    implementation project(':model')
+    implementation project(':app-security')
+    implementation project(':app-exception')
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.security:spring-security-core'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.7.0'
+
+}

@@ -4,39 +4,39 @@ import ec.com.sofka.aggregate.events.AccountCreated;
 import ec.com.sofka.aggregate.events.AccountUpdated;
 import ec.com.sofka.aggregate.events.TransactionCreated;
 import ec.com.sofka.aggregate.events.TransactionTypeCreated;
-import ec.com.sofka.aggregate.events.UserCreated;
+import ec.com.sofka.aggregate.events.CustomerCreated;
 import ec.com.sofka.gateway.busMessage.BusEventListener;
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.mapper.AccountMapper;
 import ec.com.sofka.mapper.TransactionMapper;
 import ec.com.sofka.mapper.TransactionTypeMapper;
-import ec.com.sofka.mapper.UserMapper;
+import ec.com.sofka.mapper.CustomerMapper;
 import ec.com.sofka.queries.usecases.AccountSavedViewUseCase;
 import ec.com.sofka.queries.usecases.TransactionSavedViewUseCase;
 import ec.com.sofka.queries.usecases.TransactionTypeSavedViewUseCase;
-import ec.com.sofka.queries.usecases.UserSavedViewUseCase;
+import ec.com.sofka.queries.usecases.CustomerSavedViewUseCase;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventBusListener implements BusEventListener {
-    private final UserSavedViewUseCase userSavedViewUseCase;
+    private final CustomerSavedViewUseCase customerSavedViewUseCase;
     private final AccountSavedViewUseCase accountSavedViewUseCase;
     private final TransactionTypeSavedViewUseCase transactionTypeSavedViewUseCase;
     private final TransactionSavedViewUseCase transactionSavedViewUseCase;
 
-    public EventBusListener(UserSavedViewUseCase userSavedViewUseCase, AccountSavedViewUseCase accountSavedViewUseCase, TransactionTypeSavedViewUseCase transactionTypeSavedViewUseCase, TransactionSavedViewUseCase transactionSavedViewUseCase) {
-        this.userSavedViewUseCase = userSavedViewUseCase;
+    public EventBusListener(CustomerSavedViewUseCase customerSavedViewUseCase, AccountSavedViewUseCase accountSavedViewUseCase, TransactionTypeSavedViewUseCase transactionTypeSavedViewUseCase, TransactionSavedViewUseCase transactionSavedViewUseCase) {
+        this.customerSavedViewUseCase = customerSavedViewUseCase;
         this.accountSavedViewUseCase = accountSavedViewUseCase;
         this.transactionTypeSavedViewUseCase = transactionTypeSavedViewUseCase;
         this.transactionSavedViewUseCase = transactionSavedViewUseCase;
     }
 
     @Override
-    @RabbitListener(queues = "${user.created.queue}")
-    public void receiveUserCreate(DomainEvent event) {
-        UserCreated userEvent = (UserCreated) event;
-        userSavedViewUseCase.accept(UserMapper.mapToDTOFromEvent(userEvent));
+    @RabbitListener(queues = "${customer.created.queue}")
+    public void receiveCustomerCreate(DomainEvent event) {
+        CustomerCreated customerEvent = (CustomerCreated) event;
+        customerSavedViewUseCase.accept(CustomerMapper.mapToDTOFromEvent(customerEvent));
 
     }
 

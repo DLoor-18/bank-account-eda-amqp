@@ -11,13 +11,13 @@ public class AccountResponse implements Serializable {
     private BigDecimal balance;
     private StatusEnum status;
 
-    private UserResponse user;
+    private CustomerResponse customer;
 
-    public AccountResponse(String number, BigDecimal balance, StatusEnum status, UserResponse user) {
+    public AccountResponse(String number, BigDecimal balance, StatusEnum status, CustomerResponse customer) {
         this.number = number;
         this.balance = balance;
         this.status = status;
-        this.user = user;
+        this.customer = customer;
     }
 
     public String getNumber() {
@@ -44,12 +44,12 @@ public class AccountResponse implements Serializable {
         this.status = status;
     }
 
-    public UserResponse getUser() {
-        return user;
+    public CustomerResponse getUser() {
+        return customer;
     }
 
-    public void setUser(UserResponse user) {
-        this.user = user;
+    public void setUser(CustomerResponse customer) {
+        this.customer = customer;
     }
 
 }

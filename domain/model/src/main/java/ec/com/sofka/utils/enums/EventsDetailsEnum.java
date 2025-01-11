@@ -4,11 +4,11 @@ import java.util.Arrays;
 
 public enum EventsDetailsEnum {
 
-    USER_CREATED(
-            "USER_CREATED",
-            "user.created.exchange",
-            "user.created.queue",
-            "user.created.routingKey"
+    CUSTOMER_CREATED(
+            "CUSTOMER_CREATED",
+            "customer.created.exchange",
+            "customer.created.queue",
+            "customer.created.routingKey"
     ),
     TRANSACTION_TYPE_CREATED(
             "TRANSACTION_TYPE_CREATED",

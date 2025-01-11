@@ -9,25 +9,22 @@ public class AccountCommand extends Command {
     private String accountNumber;
     private BigDecimal balance;
     private StatusEnum status;
-    private String userId;
-    private String userAggregateId;
+    private String customerAggregateId;
 
-    public AccountCommand(String aggregateId, String accountNumber, BigDecimal balance, StatusEnum status, String userId, String userAggregateId) {
+    public AccountCommand(String aggregateId, String accountNumber, BigDecimal balance, StatusEnum status, String customerAggregateId) {
         super(aggregateId);
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.userId = userId;
-        this.userAggregateId = userAggregateId;
+        this.customerAggregateId = customerAggregateId;
     }
 
-    public AccountCommand(String accountNumber, BigDecimal balance, StatusEnum status, String userId, String userAggregateId) {
+    public AccountCommand(String accountNumber, BigDecimal balance, StatusEnum status, String customerAggregateId) {
         super(null);
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.userId = userId;
-        this.userAggregateId = userAggregateId;
+        this.customerAggregateId = customerAggregateId;
     }
 
     public String getAccountNumber() {
@@ -54,19 +51,11 @@ public class AccountCommand extends Command {
         this.status = status;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getUserAggregateId() {
-        return userAggregateId;
+        return customerAggregateId;
     }
 
-    public void setUserAggregateId(String userAggregateId) {
-        this.userAggregateId = userAggregateId;
+    public void setUserAggregateId(String customerAggregateId) {
+        this.customerAggregateId = customerAggregateId;
     }
 }

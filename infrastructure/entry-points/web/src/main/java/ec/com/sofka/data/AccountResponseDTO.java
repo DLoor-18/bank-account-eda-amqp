@@ -8,13 +8,13 @@ public class AccountResponseDTO implements Serializable {
     private String accountNumber;
     private BigDecimal balance;
     private String status;
-    private UserResponseDTO user;
+    private CustomerResponseDTO customer;
 
-    public AccountResponseDTO(String accountNumber, BigDecimal balance, String status, UserResponseDTO user) {
+    public AccountResponseDTO(String accountNumber, BigDecimal balance, String status, CustomerResponseDTO customer) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.user = user;
+        this.customer = customer;
     }
 
     public String getAccountNumber() {
@@ -41,12 +41,12 @@ public class AccountResponseDTO implements Serializable {
         this.status = status;
     }
 
-    public UserResponseDTO getUser() {
-        return user;
+    public CustomerResponseDTO getUser() {
+        return customer;
     }
 
-    public void setUser(UserResponseDTO user) {
-        this.user = user;
+    public void setUser(CustomerResponseDTO customer) {
+        this.customer = customer;
     }
 
 }

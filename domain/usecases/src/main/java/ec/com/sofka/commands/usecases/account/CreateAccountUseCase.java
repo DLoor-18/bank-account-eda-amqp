@@ -1,7 +1,7 @@
 package ec.com.sofka.commands.usecases.account;
 
 import ec.com.sofka.aggregate.AccountAggregate;
-import ec.com.sofka.queries.query.user.FindUserByIdUseCase;
+import ec.com.sofka.queries.query.customer.FindCustomerByIdUseCase;
 import ec.com.sofka.commands.AccountCommand;
 import ec.com.sofka.gateway.IEventStore;
 import ec.com.sofka.gateway.busMessage.EventBusMessage;
@@ -13,25 +13,25 @@ import reactor.core.publisher.Mono;
 
 public class CreateAccountUseCase implements IUseCaseExecute<AccountCommand, AccountResponse> {
     private final IEventStore repository;
-    private final FindUserByIdUseCase findUserByIdUseCase;
+    private final FindCustomerByIdUseCase findCustomerByIdUseCase;
     private final EventBusMessage eventBusMessage;
 
-    public CreateAccountUseCase(IEventStore repository, FindUserByIdUseCase findUserByIdUseCase, EventBusMessage eventBusMessage) {
+    public CreateAccountUseCase(IEventStore repository, FindCustomerByIdUseCase findCustomerByIdUseCase, EventBusMessage eventBusMessage) {
         this.repository = repository;
-        this.findUserByIdUseCase = findUserByIdUseCase;
+        this.findCustomerByIdUseCase = findCustomerByIdUseCase;
         this.eventBusMessage = eventBusMessage;
     }
 
     public Mono<AccountResponse> execute(AccountCommand accountCommand) {
         AccountAggregate accountAggregate = new AccountAggregate();
 
-        return findUserByIdUseCase.getUserByAggregate(accountCommand.getUserAggregateId())
-                .flatMap(user -> {
+        return findCustomerByIdUseCase.getUserByAggregate(accountCommand.getUserAggregateId())
+                .flatMap(customer -> {
                     accountAggregate.createAccount(
                             accountCommand.getAccountNumber(),
                             accountCommand.getBalance(),
                             accountCommand.getStatus(),
-                            user
+                            customer
                     );
 
                     return Flux.fromIterable(accountAggregate.getUncommittedEvents())

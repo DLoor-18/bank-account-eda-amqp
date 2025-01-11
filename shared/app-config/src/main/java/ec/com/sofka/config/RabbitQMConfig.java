@@ -51,18 +51,18 @@ public class RabbitQMConfig {
     }
 
     @Bean
-    public DirectExchange userCreateExchange() {
-        return new DirectExchange(environment.getProperty(EventsDetailsEnum.USER_CREATED.getExchange()));
+    public DirectExchange customerCreateExchange() {
+        return new DirectExchange(environment.getProperty(EventsDetailsEnum.CUSTOMER_CREATED.getExchange()));
     }
 
     @Bean
-    public Queue userCreateQueue() {
-        return new Queue(Objects.requireNonNull(environment.getProperty(EventsDetailsEnum.USER_CREATED.getQueue())), true);
+    public Queue customerCreateQueue() {
+        return new Queue(Objects.requireNonNull(environment.getProperty(EventsDetailsEnum.CUSTOMER_CREATED.getQueue())), true);
     }
 
     @Bean
-    public Binding userCreateBinding(Queue userCreateQueue, DirectExchange userCreateExchange) {
-        return BindingBuilder.bind(userCreateQueue).to(userCreateExchange).with(environment.getProperty(EventsDetailsEnum.USER_CREATED.getRoutingKey()));
+    public Binding customerCreateBinding(Queue customerCreateQueue, DirectExchange customerCreateExchange) {
+        return BindingBuilder.bind(customerCreateQueue).to(customerCreateExchange).with(environment.getProperty(EventsDetailsEnum.CUSTOMER_CREATED.getRoutingKey()));
     }
 
     @Bean

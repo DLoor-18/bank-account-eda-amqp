@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-@PropertySource("classpath:config.properties")
+@PropertySource("classpath:appConfig.properties")
 public class JwtService {
 
     private final Environment environment;
@@ -44,7 +44,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + environment.getProperty("secret.key")))
                 .signWith(getSignIngKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

@@ -23,7 +23,7 @@ public class AccountMapper {
                 AccountNumber.of(account.getAccountNumber()),
                 Amount.of(account.getBalance()),
                 account.getStatus(),
-                UserMapper.mapToModelFromDTO(account.getUser()));
+                CustomerMapper.mapToModelFromDTO(account.getUser()));
     }
 
     public static AccountResponse mapToResponseFromModel(Account account) {
@@ -35,7 +35,7 @@ public class AccountMapper {
                 account.getAccountNumber().getValue(),
                 account.getBalance().getValue(),
                 account.getStatus(),
-                UserMapper.mapToResponseFromModel(account.getUser()));
+                CustomerMapper.mapToResponseFromModel(account.getUser()));
     }
 
     public static AccountResponse mapToResponseFromDTO(AccountDTO account) {
@@ -47,7 +47,7 @@ public class AccountMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 account.getStatus(),
-                UserMapper.mapToResponseFromDTO(account.getUser()));
+                CustomerMapper.mapToResponseFromDTO(account.getUser()));
     }
 
     public static AccountDTO mapToDTOFromModel(Account account) {
@@ -60,7 +60,7 @@ public class AccountMapper {
                 account.getAccountNumber().getValue(),
                 account.getBalance().getValue(),
                 account.getStatus(),
-                account.getUser() != null ? UserMapper.mapToDTOFromModel(account.getUser()) : null);
+                account.getUser() != null ? CustomerMapper.mapToDTOFromModel(account.getUser()) : null);
     }
 
     public static AccountDTO mapToDTOFromCreatedEvent(AccountCreated account) {
@@ -73,7 +73,7 @@ public class AccountMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 account.getStatus(),
-                UserMapper.mapToDTOFromModel(account.getUser()));
+                CustomerMapper.mapToDTOFromModel(account.getUser()));
     }
 
     public static AccountDTO mapToDTOFromUpdatesEvent(AccountUpdated account) {
@@ -86,7 +86,7 @@ public class AccountMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 account.getStatus(),
-                UserMapper.mapToDTOFromModel(account.getUser()));
+                CustomerMapper.mapToDTOFromModel(account.getUser()));
     }
 
 }

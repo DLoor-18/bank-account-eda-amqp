@@ -1,7 +1,7 @@
 package ec.com.sofka.rules.impl;
 
 import ec.com.sofka.queries.query.account.FindAccountByNumberUseCase;
-import ec.com.sofka.exception.TransactionRejectedException;
+import ec.com.sofka.exceptions.TransactionRejectedException;
 import ec.com.sofka.gateway.busMessage.ErrorBusMessage;
 import ec.com.sofka.gateway.dto.TransactionDTO;
 import ec.com.sofka.mapper.AccountMapper;

@@ -1,7 +1,7 @@
 package ec.com.sofka.cases.user;
 
 import ec.com.sofka.User;
-import ec.com.sofka.gateway.UserRepository;
+import ec.com.sofka.gateway.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class GetAllUsersUseCaseTest {
     @Mock
-    private UserRepository userRepository;
+    private CustomerRepository customerRepository;
 
     @InjectMocks
     private GetAllUsersUseCase getAllUsersUseCase;
@@ -36,7 +36,7 @@ public class GetAllUsersUseCaseTest {
 
     @Test
     public void testGetAllUsers_WhenUsersExist() {
-        when(userRepository.findAll()).thenReturn(Flux.just(user));
+        when(customerRepository.findAll()).thenReturn(Flux.just(user));
 
         Flux<User> result = getAllUsersUseCase.apply();
 
@@ -44,12 +44,12 @@ public class GetAllUsersUseCaseTest {
                 .expectNext(user)
                 .verifyComplete();
 
-        verify(userRepository).findAll();
+        verify(customerRepository).findAll();
     }
 
     @Test
     public void testGetAllUsers_WhenNoUsersExist() {
-        when(userRepository.findAll()).thenReturn(Flux.empty());
+        when(customerRepository.findAll()).thenReturn(Flux.empty());
 
         Flux<User> result = getAllUsersUseCase.apply();
 
@@ -57,7 +57,7 @@ public class GetAllUsersUseCaseTest {
                 .expectNext()
                 .verifyComplete();
 
-        verify(userRepository).findAll();
+        verify(customerRepository).findAll();
     }
 
 }

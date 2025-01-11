@@ -13,23 +13,23 @@ public class AccountDTO {
 
     private StatusEnum status;
 
-    private UserDTO userDTO;
+    private CustomerDTO customerDTO;
 
     public AccountDTO() {}
 
-    public AccountDTO(String id, String accountNumber, BigDecimal balance, StatusEnum status, UserDTO userDTO) {
+    public AccountDTO(String id, String accountNumber, BigDecimal balance, StatusEnum status, CustomerDTO customerDTO) {
         this.id = id;
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.userDTO = userDTO;
+        this.customerDTO = customerDTO;
     }
 
-    public AccountDTO(String accountNumber, BigDecimal balance, StatusEnum status, UserDTO userDTO) {
+    public AccountDTO(String accountNumber, BigDecimal balance, StatusEnum status, CustomerDTO customerDTO) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.userDTO = userDTO;
+        this.customerDTO = customerDTO;
     }
 
     public String getId() {
@@ -64,12 +64,12 @@ public class AccountDTO {
         this.status = status;
     }
 
-    public UserDTO getUser() {
-        return userDTO;
+    public CustomerDTO getUser() {
+        return customerDTO;
     }
 
-    public void setUser(UserDTO userDTO) {
-        this.userDTO = userDTO;
+    public void setUser(CustomerDTO customerDTO) {
+        this.customerDTO = customerDTO;
     }
 
 }

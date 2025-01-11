@@ -1,7 +1,6 @@
 package ec.com.sofka.commands.usecases.transaction;
 
 import ec.com.sofka.aggregate.AccountAggregate;
-import ec.com.sofka.mapper.UserMapper;
 import ec.com.sofka.queries.query.transcationType.FindTransactionTypeByIdUseCase;
 import ec.com.sofka.commands.usecases.account.UpdateAccountUseCase;
 import ec.com.sofka.gateway.IEventStore;
@@ -77,7 +76,6 @@ public class CreateTransactionUseCase implements IUseCaseExecute<TransactionComm
                 transaction.getAccount().getAccountNumber(),
                 transaction.getAccount().getBalance(),
                 transaction.getAccount().getStatus(),
-                transaction.getAccount().getUser().getId(),
                 null
         );
 

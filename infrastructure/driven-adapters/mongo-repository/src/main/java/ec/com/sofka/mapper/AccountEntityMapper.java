@@ -17,7 +17,7 @@ public class AccountEntityMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 account.getStatus(),
-                UserEntityMapper.mapToEntity(account.getUser())
+                CustomerEntityMapper.mapToEntity(account.getUser())
         );
 
     }
@@ -31,7 +31,7 @@ public class AccountEntityMapper {
                 accountEntity.getAccountNumber(),
                 accountEntity.getBalance(),
                 accountEntity.getStatus(),
-                UserEntityMapper.mapToDTO(accountEntity.getUser())
+                CustomerEntityMapper.mapToDTO(accountEntity.getCustomer())
         );
     }
 

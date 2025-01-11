@@ -32,3 +32,9 @@ findProject(':app-config').projectDir = file('./shared/app-config')
 
 include ':app-security'
 findProject(':app-security').projectDir = file('./shared/app-security')
+
+include ':web-auth'
+findProject(':web-auth').projectDir = file('./infrastructure/entry-points/web-auth')
+
+include ':app-exception'
+findProject(':app-exception').projectDir = file('./shared/app-exception')
