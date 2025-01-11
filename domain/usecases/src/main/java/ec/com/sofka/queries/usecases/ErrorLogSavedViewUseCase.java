@@ -13,6 +13,7 @@ public class ErrorLogSavedViewUseCase implements IUseCaseAccept<ErrorMessage> {
 
     @Override
     public void accept(ErrorMessage errorMessage) {
-        errorLogRepository.save(errorMessage);
+        errorLogRepository.save(errorMessage)
+                .subscribe();
     }
 }

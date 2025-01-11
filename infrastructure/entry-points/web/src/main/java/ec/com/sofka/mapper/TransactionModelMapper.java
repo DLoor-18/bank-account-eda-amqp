@@ -17,8 +17,8 @@ public class TransactionModelMapper {
         return new TransactionCommand(
                 transaction.getAmount(),
                 transaction.getProcessingDate(),
-                transaction.getDetails(),
                 transaction.getAccountNumber(),
+                transaction.getDetails(),
                 transaction.getTransactionTypeId(),
                 transaction.getTransactionTypeAggregateId(),
                 transaction.getAccountAggregateId()

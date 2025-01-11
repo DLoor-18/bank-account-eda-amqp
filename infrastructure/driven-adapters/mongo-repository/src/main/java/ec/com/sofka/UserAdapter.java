@@ -18,13 +18,8 @@ public class UserAdapter implements UserRepository {
 
     @Override
     public Mono<UserDTO> save(UserDTO user) {
-        try {
-            return userRepository.save(UserEntityMapper.mapToEntity(user))
-                    .map(UserEntityMapper::mapToDTO);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+        return userRepository.save(UserEntityMapper.mapToEntity(user))
+                .map(UserEntityMapper::mapToDTO);
     }
 
     @Override

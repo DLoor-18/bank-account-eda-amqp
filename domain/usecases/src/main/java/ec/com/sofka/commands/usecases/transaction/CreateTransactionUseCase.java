@@ -1,6 +1,7 @@
 package ec.com.sofka.commands.usecases.transaction;
 
 import ec.com.sofka.aggregate.AccountAggregate;
+import ec.com.sofka.mapper.UserMapper;
 import ec.com.sofka.queries.query.transcationType.FindTransactionTypeByIdUseCase;
 import ec.com.sofka.commands.usecases.account.UpdateAccountUseCase;
 import ec.com.sofka.gateway.IEventStore;
@@ -70,45 +71,27 @@ public class CreateTransactionUseCase implements IUseCaseExecute<TransactionComm
                 AccountMapper.mapToModelFromDTO(transaction.getAccount()),
                 TransactionTypeMapper.mapToModelFromDTO(transaction.getTransactionType())
         );
+        System.out.println(accountAggregate);
+        AccountCommand accountCommand = new AccountCommand(
+                accountAggregateId,
+                transaction.getAccount().getAccountNumber(),
+                transaction.getAccount().getBalance(),
+                transaction.getAccount().getStatus(),
+                transaction.getAccount().getUser().getId(),
+                null
+        );
 
-        return Flux.fromIterable(accountAggregate.getUncommittedEvents())
-                .flatMap(repository::save)
-                .doOnNext(eventBusMessage::sendEvent)
-                .then(Mono.fromRunnable(accountAggregate::markEventsAsCommitted))
-                .then(
-                        updateAccountUseCase.execute(new AccountCommand(
-                                        accountAggregateId,
-                                        transaction.getAccount().getAccountNumber(),
-                                        transaction.getAccount().getBalance(),
-                                        transaction.getAccount().getStatus(),
-                                        transaction.getAccount().getUser().getId(),
-                                        null
-                                ))
-                                .mapNotNull(account -> TransactionMapper.mapToResponseFromModel(accountAggregate.getTransaction()))
-                );
+        return updateAccountUseCase.execute(accountCommand)
+                .flatMap(transactionDTO -> {
 
-
-
-
-
-//        AccountCommand accountCommand = new AccountCommand(
-//                accountAggregateId,
-//                transaction.getAccount().getAccountNumber(),
-//                transaction.getAccount().getBalance(),
-//                transaction.getAccount().getStatus(),
-//                transaction.getAccount().getUser().getId(),
-//                null
-//        );
-//
-//        return updateAccountUseCase.execute(accountCommand)
-//                .flatMap(transactionDTO -> {
-//
-//                    return Flux.fromIterable(accountAggregate.getUncommittedEvents())
-//                            .flatMap(repository::save)
-//                            .doOnNext(eventBusMessage::sendEvent)
-//                            .then(Mono.fromRunnable(accountAggregate::markEventsAsCommitted))
-//                            .map(TransactionTypeMapper::mapToResponseFromModel);
-//                });
+                            return Flux.fromIterable(accountAggregate.getUncommittedEvents())
+                                    .flatMap(repository::save)
+                                    .doOnNext(eventBusMessage::sendEvent)
+                                    .then(Mono.fromCallable(() -> {
+                                        accountAggregate.markEventsAsCommitted();
+                                        return TransactionMapper.mapToResponseFromModel(accountAggregate.getTransaction());
+                                    }));
+                        });
 
     }
 

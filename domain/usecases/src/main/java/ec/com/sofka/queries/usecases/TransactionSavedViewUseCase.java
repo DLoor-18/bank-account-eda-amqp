@@ -13,7 +13,8 @@ public class TransactionSavedViewUseCase implements IUseCaseAccept<TransactionDT
 
     @Override
     public void accept(TransactionDTO transactionDTO) {
-        transactionRepository.save(transactionDTO);
+        transactionRepository.save(transactionDTO)
+                .subscribe();
     }
 
 }
