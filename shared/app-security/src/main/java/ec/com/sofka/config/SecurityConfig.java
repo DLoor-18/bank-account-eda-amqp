@@ -24,8 +24,12 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges ->
                         exchanges
-                                .pathMatchers("/api/auth/**")
-                                .permitAll()
+                                .pathMatchers("/api/auth/**",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**") .permitAll()
+//                                .pathMatchers("/api/admin/**").hasRole("ADMIN") // Solo para ADMIN
+
+                                .pathMatchers("/api/transactions").hasAuthority("ROLE_ADMIN")
                                 .anyExchange()
                                 .authenticated())
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())

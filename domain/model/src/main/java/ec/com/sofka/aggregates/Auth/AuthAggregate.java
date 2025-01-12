@@ -5,23 +5,23 @@ import ec.com.sofka.aggregates.Auth.entities.user.values.UserId;
 import ec.com.sofka.aggregates.Auth.events.UserCreated;
 import ec.com.sofka.aggregates.Auth.events.UserUpdated;
 import ec.com.sofka.aggregates.Auth.handlers.UserHandler;
-import ec.com.sofka.aggregates.Auth.values.AuthAggergateId;
+import ec.com.sofka.aggregates.Auth.values.AuthAggregateId;
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.generics.shared.AggregateRoot;
 import ec.com.sofka.utils.enums.RoleEnum;
 
 import java.util.List;
 
-public class AuthAggregate extends AggregateRoot<AuthAggergateId> {
+public class AuthAggregate extends AggregateRoot<AuthAggregateId> {
     private User user;
 
     public AuthAggregate() {
-        super(new AuthAggergateId());
+        super(new AuthAggregateId());
         setSubscription(new UserHandler(this));
     }
 
     public AuthAggregate(final String id) {
-        super(AuthAggergateId.of(id));
+        super(AuthAggregateId.of(id));
         setSubscription(new UserHandler(this));
     }
 

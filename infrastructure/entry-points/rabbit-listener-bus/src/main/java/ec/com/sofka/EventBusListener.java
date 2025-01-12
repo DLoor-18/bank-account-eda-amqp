@@ -6,6 +6,7 @@ import ec.com.sofka.aggregates.Account.events.TransactionCreated;
 import ec.com.sofka.aggregates.Account.events.TransactionTypeCreated;
 import ec.com.sofka.aggregates.Account.events.CustomerCreated;
 import ec.com.sofka.aggregates.Auth.events.UserCreated;
+import ec.com.sofka.aggregates.Auth.events.UserUpdated;
 import ec.com.sofka.gateway.busMessage.BusEventListener;
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.mapper.*;
@@ -40,8 +41,8 @@ public class EventBusListener implements BusEventListener {
     @Override
     @RabbitListener(queues = "${user.updated.queue}")
     public void receiveUserUpdated(DomainEvent event) {
-        UserCreated userCreated = (UserCreated) event;
-        userSavedViewUseCase.accept(UserMapper.mapToDTOFromCreatedEvent(userCreated));
+        UserUpdated userUpdated = (UserUpdated) event;
+        userSavedViewUseCase.accept(UserMapper.mapToDTOFromUpdatesEvent(userUpdated));
 
     }
 

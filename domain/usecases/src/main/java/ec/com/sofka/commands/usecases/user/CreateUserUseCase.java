@@ -1,20 +1,19 @@
 package ec.com.sofka.commands.usecases.user;
 
 import ec.com.sofka.aggregates.Auth.AuthAggregate;
-import ec.com.sofka.commands.UserComand;
+import ec.com.sofka.commands.UserCommand;
 import ec.com.sofka.exceptions.ConflictException;
 import ec.com.sofka.gateway.IEventStore;
 import ec.com.sofka.gateway.UserRepository;
 import ec.com.sofka.gateway.busMessage.ErrorBusMessage;
 import ec.com.sofka.gateway.busMessage.EventBusMessage;
 import ec.com.sofka.generics.interfaces.IUseCaseExecute;
-import ec.com.sofka.mapper.UserMapper;
 import ec.com.sofka.model.ErrorMessage;
 import ec.com.sofka.queries.responses.UserResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public class CreateUserUseCase implements IUseCaseExecute<UserComand, UserResponse> {
+public class CreateUserUseCase implements IUseCaseExecute<UserCommand, UserResponse> {
     private final IEventStore repository;
     private final UserRepository userRepository;
     private final ErrorBusMessage errorBusMessage;
@@ -29,22 +28,22 @@ public class CreateUserUseCase implements IUseCaseExecute<UserComand, UserRespon
 
 
     @Override
-    public Mono<UserResponse> execute(UserComand userComand) {
+    public Mono<UserResponse> execute(UserCommand userCommand) {
         AuthAggregate authAggregate = new AuthAggregate();
 
-        return userRepository.findByEmail(userComand.getEmail())
+        return userRepository.findByEmail(userCommand.getEmail())
                 .flatMap(userFound -> {
-                    errorBusMessage.sendMsg(new ErrorMessage("Email is already registered (" + userComand.getEmail() + ")",
+                    errorBusMessage.sendMsg(new ErrorMessage("Email is already registered (" + userCommand.getEmail() + ")",
                             "Create User"));
                     return Mono.<UserResponse>error(new ConflictException("The user is already registered."));
                 })
                 .switchIfEmpty(Mono.defer(() -> {
                     authAggregate.createUser(
-                            userComand.getFirstName(),
-                            userComand.getLastName(),
-                            userComand.getEmail(),
-                            userComand.getPassword(),
-                            userComand.getRole()
+                            userCommand.getFirstName(),
+                            userCommand.getLastName(),
+                            userCommand.getEmail(),
+                            userCommand.getPassword(),
+                            userCommand.getRole()
                     );
 
                     return Flux.fromIterable(authAggregate.getUncommittedEvents())
@@ -52,7 +51,7 @@ public class CreateUserUseCase implements IUseCaseExecute<UserComand, UserRespon
                             .doOnNext(eventBusMessage::sendEvent)
                             .then(Mono.fromCallable(() -> {
                                 authAggregate.markEventsAsCommitted();
-                                return UserMapper.mapToResponseFromModel(authAggregate.getUser());
+                                return new UserResponse(userCommand.getFirstName(), userCommand.getLastName(), userCommand.getEmail(), userCommand.getRole());
                             }));
                 }));
     }

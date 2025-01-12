@@ -3,14 +3,14 @@ package ec.com.sofka.commands;
 import ec.com.sofka.generics.shared.Command;
 import ec.com.sofka.utils.enums.RoleEnum;
 
-public class UserComand extends Command {
+public class UserCommand extends Command {
     private String firstName;
     private String lastName;
     private String email;
     private String password;
     private RoleEnum role;
 
-    public UserComand(String firstName, String lastName, String email, String password, RoleEnum role) {
+    public UserCommand(String firstName, String lastName, String email, String password, RoleEnum role) {
         super(null);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -19,7 +19,7 @@ public class UserComand extends Command {
         this.role = role;
     }
 
-    public UserComand(String aggregateId, String firstName, String lastName, String email, String password, RoleEnum role) {
+    public UserCommand(String aggregateId, String firstName, String lastName, String email, String password, RoleEnum role) {
         super(aggregateId);
         this.firstName = firstName;
         this.lastName = lastName;
