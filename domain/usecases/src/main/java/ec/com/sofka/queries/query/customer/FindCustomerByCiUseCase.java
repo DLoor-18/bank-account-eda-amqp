@@ -1,6 +1,6 @@
 package ec.com.sofka.queries.query.customer;
 
-import ec.com.sofka.aggregate.AccountAggregate;
+import ec.com.sofka.aggregates.Account.AccountAggregate;
 import ec.com.sofka.exceptions.RecordNotFoundException;
 import ec.com.sofka.gateway.IEventStore;
 import ec.com.sofka.gateway.CustomerRepository;

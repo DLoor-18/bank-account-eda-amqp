@@ -2,9 +2,9 @@ package ec.com.sofka.router;
 
 import ec.com.sofka.data.TransactionRequestDTO;
 import ec.com.sofka.data.TransactionResponseDTO;
-import ec.com.sofka.exceptions.RequestValidator;
 import ec.com.sofka.exceptions.model.ErrorDetails;
 import ec.com.sofka.handlers.transaction.CreateTransactionHandler;
+import ec.com.sofka.validator.RequestValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

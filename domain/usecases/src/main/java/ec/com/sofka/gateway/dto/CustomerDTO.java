@@ -4,13 +4,9 @@ import ec.com.sofka.utils.enums.StatusEnum;
 
 public class CustomerDTO {
     private String id;
-
     private String firstName;
-
     private String lastName;
-
     private String identityCard;
-
     private StatusEnum status;
 
     public CustomerDTO(){

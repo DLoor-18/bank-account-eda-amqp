@@ -21,7 +21,6 @@ public class JwtAuthFilter implements WebFilter {
         this.jwtService = jwtService;
     }
 
-
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain filterChain) {
 

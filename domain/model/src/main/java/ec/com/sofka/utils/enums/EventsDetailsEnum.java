@@ -4,6 +4,18 @@ import java.util.Arrays;
 
 public enum EventsDetailsEnum {
 
+    USER_CREATED(
+            "USER_CREATED",
+            "user.created.exchange",
+            "user.created.queue",
+            "user.created.routingKey"
+    ),
+    USER_UPDATED(
+            "USER_UPDATED",
+            "user.updated.exchange",
+            "user.updated.queue",
+            "user.updated.routingKey"
+    ),
     CUSTOMER_CREATED(
             "CUSTOMER_CREATED",
             "customer.created.exchange",

@@ -1,7 +1,7 @@
 package ec.com.sofka.queries.query.transcationType;
 
-import ec.com.sofka.aggregate.AccountAggregate;
-import ec.com.sofka.aggregate.entities.transactionType.TransactionType;
+import ec.com.sofka.aggregates.Account.AccountAggregate;
+import ec.com.sofka.aggregates.Account.entities.transactionType.TransactionType;
 import ec.com.sofka.exceptions.RecordNotFoundException;
 import ec.com.sofka.gateway.busMessage.ErrorBusMessage;
 import ec.com.sofka.gateway.IEventStore;
@@ -14,12 +14,10 @@ import ec.com.sofka.queries.responses.TransactionTypeResponse;
 import reactor.core.publisher.Mono;
 
 public class FindTransactionTypeByIdUseCase implements IUseCaseGetElement<GetElementQuery, TransactionTypeResponse> {
-    private final TransactionTypeRepository transactionTypeRepository;
     private final IEventStore eventStore;
     private final ErrorBusMessage errorBusMessage;
 
-    public FindTransactionTypeByIdUseCase(TransactionTypeRepository transactionTypeRepository, IEventStore eventStore, ErrorBusMessage errorBusMessage) {
-        this.transactionTypeRepository = transactionTypeRepository;
+    public FindTransactionTypeByIdUseCase(IEventStore eventStore, ErrorBusMessage errorBusMessage) {
         this.eventStore = eventStore;
         this.errorBusMessage = errorBusMessage;
     }

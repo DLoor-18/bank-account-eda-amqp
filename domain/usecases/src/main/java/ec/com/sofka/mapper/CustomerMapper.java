@@ -1,10 +1,10 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.aggregate.events.CustomerCreated;
+import ec.com.sofka.aggregates.Account.events.CustomerCreated;
 import ec.com.sofka.gateway.dto.CustomerDTO;
-import ec.com.sofka.aggregate.entities.customer.Customer;
-import ec.com.sofka.aggregate.entities.customer.values.CustomerId;
-import ec.com.sofka.aggregate.entities.customer.values.objects.IdentityCard;
+import ec.com.sofka.aggregates.Account.entities.customer.Customer;
+import ec.com.sofka.aggregates.Account.entities.customer.values.CustomerId;
+import ec.com.sofka.aggregates.Account.entities.customer.values.objects.IdentityCard;
 import ec.com.sofka.queries.responses.CustomerResponse;
 
 public class CustomerMapper {

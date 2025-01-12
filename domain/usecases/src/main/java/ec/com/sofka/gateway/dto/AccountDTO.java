@@ -6,13 +6,9 @@ import java.math.BigDecimal;
 
 public class AccountDTO {
     private String id;
-
     private String accountNumber;
-
     private BigDecimal balance;
-
     private StatusEnum status;
-
     private CustomerDTO customerDTO;
 
     public AccountDTO() {}

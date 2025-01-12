@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class TransactionTypeResponse implements Serializable {
-
     private String type;
     private String description;
     private BigDecimal value;

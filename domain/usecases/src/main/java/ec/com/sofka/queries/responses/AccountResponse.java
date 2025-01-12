@@ -10,7 +10,6 @@ public class AccountResponse implements Serializable {
     private String number;
     private BigDecimal balance;
     private StatusEnum status;
-
     private CustomerResponse customer;
 
     public AccountResponse(String number, BigDecimal balance, StatusEnum status, CustomerResponse customer) {

@@ -14,10 +14,11 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Service
-@PropertySource("classpath:appConfig.properties")
+@PropertySource("classpath:config.properties")
 public class JwtService {
 
     private final Environment environment;
@@ -44,7 +45,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + environment.getProperty("secret.key")))
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(Objects.requireNonNull(environment.getProperty("jwt.expiration")))))
                 .signWith(getSignIngKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

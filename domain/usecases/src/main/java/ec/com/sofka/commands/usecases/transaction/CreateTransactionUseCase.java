@@ -1,6 +1,6 @@
 package ec.com.sofka.commands.usecases.transaction;
 
-import ec.com.sofka.aggregate.AccountAggregate;
+import ec.com.sofka.aggregates.Account.AccountAggregate;
 import ec.com.sofka.queries.query.transcationType.FindTransactionTypeByIdUseCase;
 import ec.com.sofka.commands.usecases.account.UpdateAccountUseCase;
 import ec.com.sofka.gateway.IEventStore;
@@ -10,7 +10,7 @@ import ec.com.sofka.generics.interfaces.IUseCaseExecute;
 import ec.com.sofka.mapper.AccountMapper;
 import ec.com.sofka.mapper.TransactionMapper;
 import ec.com.sofka.mapper.TransactionTypeMapper;
-import ec.com.sofka.aggregate.entities.transaction.values.objects.ProcessingDate;
+import ec.com.sofka.aggregates.Account.entities.transaction.values.objects.ProcessingDate;
 import ec.com.sofka.commands.AccountCommand;
 import ec.com.sofka.commands.TransactionCommand;
 import ec.com.sofka.queries.responses.TransactionResponse;
@@ -70,7 +70,7 @@ public class CreateTransactionUseCase implements IUseCaseExecute<TransactionComm
                 AccountMapper.mapToModelFromDTO(transaction.getAccount()),
                 TransactionTypeMapper.mapToModelFromDTO(transaction.getTransactionType())
         );
-        System.out.println(accountAggregate);
+
         AccountCommand accountCommand = new AccountCommand(
                 accountAggregateId,
                 transaction.getAccount().getAccountNumber(),
@@ -81,7 +81,6 @@ public class CreateTransactionUseCase implements IUseCaseExecute<TransactionComm
 
         return updateAccountUseCase.execute(accountCommand)
                 .flatMap(transactionDTO -> {
-
                             return Flux.fromIterable(accountAggregate.getUncommittedEvents())
                                     .flatMap(repository::save)
                                     .doOnNext(eventBusMessage::sendEvent)

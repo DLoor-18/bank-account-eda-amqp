@@ -2,16 +2,14 @@ package ec.com.sofka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ec.com.sofka.exceptions.EmptyCollectionException;
-import ec.com.sofka.exceptions.InternalServerException;
-import ec.com.sofka.exceptions.RequestValidationException;
-import ec.com.sofka.exceptions.ConflictException;
+import ec.com.sofka.exceptions.*;
 import ec.com.sofka.exceptions.model.ErrorDetails;
-import ec.com.sofka.exceptions.RecordNotFoundException;
-import ec.com.sofka.exceptions.TransactionRejectedException;
+
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -35,6 +33,9 @@ public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
             ConflictException.class, ex -> new ErrorDetails(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), new Date()),
             TransactionRejectedException.class, ex -> new ErrorDetails(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), new Date()),
             RecordNotFoundException.class, ex -> new ErrorDetails(HttpStatus.NOT_FOUND.value(), ex.getMessage(), new Date()),
+            InvalidFieldException.class, ex -> new ErrorDetails(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), new Date()),
+            ExpiredJwtException.class, ex -> new ErrorDetails(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), new Date()),
+            UsernameNotFoundException.class, ex -> new ErrorDetails(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), new Date()),
             RequestValidationException.class, ex -> {
                 List<String> errors = ((RequestValidationException) ex).getErrors();
                 return new ErrorDetails(HttpStatus.UNPROCESSABLE_ENTITY.value(), String.join(", ", errors), new Date());

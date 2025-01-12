@@ -1,0 +1,55 @@
+package ec.com.sofka.aggregates.Auth;
+
+import ec.com.sofka.aggregates.Auth.entities.user.User;
+import ec.com.sofka.aggregates.Auth.entities.user.values.UserId;
+import ec.com.sofka.aggregates.Auth.events.UserCreated;
+import ec.com.sofka.aggregates.Auth.events.UserUpdated;
+import ec.com.sofka.aggregates.Auth.handlers.UserHandler;
+import ec.com.sofka.aggregates.Auth.values.AuthAggergateId;
+import ec.com.sofka.generics.domain.DomainEvent;
+import ec.com.sofka.generics.shared.AggregateRoot;
+import ec.com.sofka.utils.enums.RoleEnum;
+
+import java.util.List;
+
+public class AuthAggregate extends AggregateRoot<AuthAggergateId> {
+    private User user;
+
+    public AuthAggregate() {
+        super(new AuthAggergateId());
+        setSubscription(new UserHandler(this));
+    }
+
+    public AuthAggregate(final String id) {
+        super(AuthAggergateId.of(id));
+        setSubscription(new UserHandler(this));
+    }
+
+    public void createUser(String firstName, String lastName, String email, String password, RoleEnum role){
+        addEvent(new UserCreated(new UserId().getValue(), firstName, lastName, email, password, role));
+    }
+
+    public void updateUser(String userId, String firstName, String lastName, String email, String password, RoleEnum role){
+        addEvent(new UserUpdated(UserId.of(userId).getValue(), firstName, lastName, email, password, role));
+    }
+
+    public static AuthAggregate from(final String id, List<DomainEvent> events) {
+        AuthAggregate authAggregate = new AuthAggregate(id);
+        events.stream()
+                .filter(event -> id.equals(event.getAggregateRootId()))
+                .reduce((first, second) -> second)
+                .ifPresent(event -> authAggregate.addEvent(event).apply());
+        authAggregate.markEventsAsCommitted();
+        return authAggregate;
+    }
+
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+}

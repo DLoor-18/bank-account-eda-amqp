@@ -26,14 +26,13 @@ public class UserRequestDTO implements Serializable {
     @Pattern(regexp = "^[a-zA-ZÁÉÍÓÚáéíóúñÑ ]+$", message = "Incorrect firstName format")
     private String firstName;
 
-    @Schema(description = "First name of user", example = "Juan")
-    @NotNull(message = "firstName cannot be null")
+    @Schema(description = "Last name of user", example = "Zambrano")
+    @NotNull(message = "lastName cannot be null")
     @Pattern(regexp = "^[a-zA-ZÁÉÍÓÚáéíóúñÑ ]+$", message = "Incorrect firstName format")
     private String lastName;
 
-    @Schema(description = "First name of user", example = "Juan")
-    @NotNull(message = "firstName cannot be null")
-    @Pattern(regexp = "^[a-zA-ZÁÉÍÓÚáéíóúñÑ ]+$", message = "Incorrect firstName format")
+    @Schema(description = "User role of user", example = "ADMIN")
+    @NotNull(message = "userRole cannot be null")
     private String userRole;
 
     public UserRequestDTO(String email, String password, String firstName, String lastName, String userRole) {

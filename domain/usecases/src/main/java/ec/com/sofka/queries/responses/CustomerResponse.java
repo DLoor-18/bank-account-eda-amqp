@@ -5,7 +5,6 @@ import ec.com.sofka.utils.enums.StatusEnum;
 import java.io.Serializable;
 
 public class CustomerResponse implements Serializable {
-
     private String firstName;
     private String lastName;
     private String identityCard;

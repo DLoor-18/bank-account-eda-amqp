@@ -23,7 +23,7 @@ public class CustomerRequestDTO implements Serializable {
     @Schema(description = "Identification code of customer", example = "1000000000")
     @NotNull(message = "identity card cannot be null")
     @Pattern(regexp = "^[0-9]+$", message = "Incorrect identity card format")
-    @Size(min = 10, max = 10, message = "Incorrect identity card length")
+//    @Size(min = 10, max = 10, message = "Incorrect identity card length")
     private String identityCard;
 
     @Schema(description = "Status of customer", example = "ACTIVE")

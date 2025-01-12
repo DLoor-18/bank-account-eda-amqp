@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class TransactionResponse implements Serializable {
-
     private String accountNumber;
     private String details;
     private BigDecimal amount;

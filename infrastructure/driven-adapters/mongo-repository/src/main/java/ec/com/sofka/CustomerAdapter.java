@@ -1,9 +1,10 @@
 package ec.com.sofka;
 
-import ec.com.sofka.database.account.ICustomerRepository;
+import ec.com.sofka.repository.account.ICustomerRepository;
 import ec.com.sofka.gateway.CustomerRepository;
 import ec.com.sofka.gateway.dto.CustomerDTO;
 import ec.com.sofka.mapper.CustomerEntityMapper;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -11,9 +12,11 @@ import reactor.core.publisher.Mono;
 @Repository
 public class CustomerAdapter implements CustomerRepository {
     private final ICustomerRepository customerRepository;
+    private final ReactiveMongoTemplate accountReactiveMongoTemplate;
 
-    public CustomerAdapter(ICustomerRepository customerRepository) {
+    public CustomerAdapter(ICustomerRepository customerRepository, ReactiveMongoTemplate accountReactiveMongoTemplate) {
         this.customerRepository = customerRepository;
+        this.accountReactiveMongoTemplate = accountReactiveMongoTemplate;
     }
 
     @Override

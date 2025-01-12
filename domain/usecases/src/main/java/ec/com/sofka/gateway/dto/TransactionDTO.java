@@ -4,17 +4,11 @@ import java.math.BigDecimal;
 
 public class TransactionDTO {
     private String id;
-
     private String accountNumber;
-
     private String details;
-
     private BigDecimal amount;
-
     private String processingDate;
-
     private AccountDTO accountDTO;
-
     private TransactionTypeDTO transactionType;
 
     public TransactionDTO(){}

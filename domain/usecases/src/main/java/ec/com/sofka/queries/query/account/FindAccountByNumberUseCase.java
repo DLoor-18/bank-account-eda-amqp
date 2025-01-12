@@ -1,7 +1,7 @@
 package ec.com.sofka.queries.query.account;
 
-import ec.com.sofka.aggregate.AccountAggregate;
-import ec.com.sofka.aggregate.entities.account.Account;
+import ec.com.sofka.aggregates.Account.AccountAggregate;
+import ec.com.sofka.aggregates.Account.entities.account.Account;
 import ec.com.sofka.exceptions.RecordNotFoundException;
 import ec.com.sofka.gateway.busMessage.ErrorBusMessage;
 import ec.com.sofka.gateway.IEventStore;

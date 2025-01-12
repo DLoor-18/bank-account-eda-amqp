@@ -6,17 +6,11 @@ import java.math.BigDecimal;
 
 public class TransactionTypeDTO {
     private String id;
-
     private String type;
-
     private String description;
-
     private BigDecimal value;
-
     private Boolean transactionCost;
-
     private Boolean discount;
-
     private StatusEnum status;
 
     public TransactionTypeDTO() {}

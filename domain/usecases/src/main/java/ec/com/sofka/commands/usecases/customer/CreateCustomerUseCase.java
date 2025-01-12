@@ -1,7 +1,8 @@
 package ec.com.sofka.commands.usecases.customer;
 
-import ec.com.sofka.aggregate.AccountAggregate;
+import ec.com.sofka.aggregates.Account.AccountAggregate;
 import ec.com.sofka.exceptions.ConflictException;
+import ec.com.sofka.exceptions.InvalidFieldException;
 import ec.com.sofka.gateway.busMessage.ErrorBusMessage;
 import ec.com.sofka.gateway.IEventStore;
 import ec.com.sofka.gateway.CustomerRepository;
@@ -32,9 +33,9 @@ public class CreateCustomerUseCase implements IUseCaseExecute<CustomerCommand, C
 
         return customerRepository.findByIdentityCard(customerCommand.getIdentityCard())
                 .flatMap(userFound -> {
-                    errorBusMessage.sendMsg(new ErrorMessage("User is already registered (" + customerCommand.getIdentityCard() + ")",
+                    errorBusMessage.sendMsg(new ErrorMessage("Customer is already registered (" + customerCommand.getIdentityCard() + ")",
                             "Create User"));
-                    return Mono.<CustomerResponse>error(new ConflictException("The user is already registered."));
+                    return Mono.<CustomerResponse>error(new ConflictException("The customer is already registered."));
                 })
                 .switchIfEmpty(Mono.defer(() -> {
                     accountAggregate.createCustomer(

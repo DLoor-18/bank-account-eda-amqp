@@ -1,6 +1,6 @@
 package ec.com.sofka.commands.usecases.account;
 
-import ec.com.sofka.aggregate.AccountAggregate;
+import ec.com.sofka.aggregates.Account.AccountAggregate;
 import ec.com.sofka.queries.query.customer.FindCustomerByIdUseCase;
 import ec.com.sofka.commands.AccountCommand;
 import ec.com.sofka.gateway.IEventStore;
