@@ -22,6 +22,9 @@ public class AuthRequestDTO {
         this.password = password;
     }
 
+    public AuthRequestDTO() {
+    }
+
     public String getEmail() {
         return email;
     }

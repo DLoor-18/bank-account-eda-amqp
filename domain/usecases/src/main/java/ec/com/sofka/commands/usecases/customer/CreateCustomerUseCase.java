@@ -1,8 +1,7 @@
 package ec.com.sofka.commands.usecases.customer;
 
-import ec.com.sofka.aggregates.Account.AccountAggregate;
+import ec.com.sofka.aggregates.account.AccountAggregate;
 import ec.com.sofka.exceptions.ConflictException;
-import ec.com.sofka.exceptions.InvalidFieldException;
 import ec.com.sofka.gateway.busMessage.ErrorBusMessage;
 import ec.com.sofka.gateway.IEventStore;
 import ec.com.sofka.gateway.CustomerRepository;

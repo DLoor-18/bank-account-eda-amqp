@@ -1,6 +1,6 @@
 package ec.com.sofka.commands.usecases.account;
 
-import ec.com.sofka.aggregates.Account.AccountAggregate;
+import ec.com.sofka.aggregates.account.AccountAggregate;
 import ec.com.sofka.queries.query.customer.FindCustomerByIdUseCase;
 import ec.com.sofka.commands.AccountCommand;
 import ec.com.sofka.gateway.IEventStore;
@@ -25,7 +25,7 @@ public class CreateAccountUseCase implements IUseCaseExecute<AccountCommand, Acc
     public Mono<AccountResponse> execute(AccountCommand accountCommand) {
         AccountAggregate accountAggregate = new AccountAggregate();
 
-        return findCustomerByIdUseCase.getUserByAggregate(accountCommand.getUserAggregateId())
+        return findCustomerByIdUseCase.getById(accountCommand.getUserAggregateId())
                 .flatMap(customer -> {
                     accountAggregate.createAccount(
                             accountCommand.getAccountNumber(),

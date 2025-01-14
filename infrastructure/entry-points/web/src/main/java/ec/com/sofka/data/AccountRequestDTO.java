@@ -30,6 +30,9 @@ public class AccountRequestDTO implements Serializable {
     @NotNull(message = "customerAggregateId cannot be null")
     private String customerAggregateId;
 
+    public AccountRequestDTO() {
+    }
+
     public AccountRequestDTO(String accountNumber, BigDecimal balance, String status, String customerAggregateId) {
         this.accountNumber = accountNumber;
         this.balance = balance;

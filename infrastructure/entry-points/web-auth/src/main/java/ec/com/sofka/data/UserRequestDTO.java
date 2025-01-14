@@ -43,6 +43,9 @@ public class UserRequestDTO implements Serializable {
         this.userRole = userRole;
     }
 
+    public UserRequestDTO() {
+    }
+
     public String getEmail() {
         return email;
     }

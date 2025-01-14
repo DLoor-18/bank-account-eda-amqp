@@ -24,6 +24,9 @@ public class ErrorLogEntity {
         this.timestamp = timestamp;
     }
 
+    public ErrorLogEntity() {
+    }
+
     public String getError() {
         return error;
     }

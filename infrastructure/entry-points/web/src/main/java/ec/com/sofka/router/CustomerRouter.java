@@ -79,59 +79,20 @@ public class CustomerRouter {
                                     )
                             }
                     )
-            ),
-//            @RouterOperation(
-//                    path = "/api/customers",
-//                    method = RequestMethod.GET,
-//                    beanClass = GetAllUsersHandler.class,
-//                    beanMethod = "getAllUsers",
-//                    operation = @Operation(
-//                            tags = {"Users"},
-//                            operationId = "getAllUsers",
-//                            summary = "Get all customers",
-//                            description = "Get all registered customers.",
-//                            responses = {
-//                                    @ApiResponse(
-//                                            responseCode = "200",
-//                                            description = "Successfully obtained all registered customers.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))
-//                                    ),
-//                                    @ApiResponse(
-//                                            responseCode = "400",
-//                                            description = "Bad request.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-//                                    ),
-//                                    @ApiResponse(
-//                                            responseCode = "500",
-//                                            description = "Internal application problems.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-//                                    )
-//                            }
-//                    )
-//            )
+            )
     })
     public RouterFunction<ServerResponse> customersRouters() {
         return RouterFunctions
                 .route(POST("/api/customers").and(accept(APPLICATION_JSON)), this::saveCustomer);
-//                .andRoute(GET("/api/customers"), this::allUsers);
     }
 
     public Mono<ServerResponse> saveCustomer(ServerRequest request) {
         return request.bodyToMono(CustomerRequestDTO.class)
-                .flatMap(requestValidator::validate)
+                .doOnNext(requestValidator::validate)
                 .flatMap(createCustomerHandler::save)
                 .flatMap(response ->
                         ServerResponse.ok().contentType(APPLICATION_JSON).bodyValue(response));
 
     }
-
-//    public Mono<ServerResponse> allUsers(ServerRequest request) {
-//        return getAllUsersHandler.getAllUsers()
-//                .collectList()
-//                .flatMap(list -> ServerResponse.ok()
-//                        .contentType(APPLICATION_JSON)
-//                        .bodyValue(list)
-//                );
-//    }
 
 }

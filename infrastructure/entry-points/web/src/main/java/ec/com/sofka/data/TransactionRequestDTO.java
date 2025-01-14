@@ -43,21 +43,18 @@ public class TransactionRequestDTO implements Serializable {
     @NotNull(message = "typeTransactionId cannot be null")
     private String transactionTypeId;
 
-    @Schema(description = "transaction Type Aggregate ID")
-    @NotNull(message = "transactionTypeAggregateId cannot be null")
-    private String transactionTypeAggregateId;
-
     @Schema(description = "Account Aggregate ID")
     @NotNull(message = "accountAggregateId cannot be null")
     private String accountAggregateId;
 
-    public TransactionRequestDTO(BigDecimal amount, String processingDate, String accountNumber, String details, String status, String transactionTypeId) {
+    public TransactionRequestDTO(BigDecimal amount, String processingDate, String accountNumber, String details, String status, String transactionTypeId, String accountAggregateId) {
         this.amount = amount;
         this.processingDate = processingDate;
         this.accountNumber = accountNumber;
         this.details = details;
         this.status = status;
         this.transactionTypeId = transactionTypeId;
+        this.accountAggregateId = accountAggregateId;
     }
 
     public BigDecimal getAmount() {
@@ -87,9 +84,6 @@ public class TransactionRequestDTO implements Serializable {
         return transactionTypeId;
     }
 
-    public String getTransactionTypeAggregateId() {
-        return transactionTypeAggregateId;
-    }
 
     public String getAccountAggregateId() {
         return accountAggregateId;

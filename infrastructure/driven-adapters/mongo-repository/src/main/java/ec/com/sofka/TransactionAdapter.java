@@ -26,6 +26,12 @@ public class TransactionAdapter implements TransactionRepository {
     }
 
     @Override
+    public Mono<TransactionDTO> findById(String id) {
+        return transactionRepository.findById(id)
+                .map(TransactionEntityMapper::mapToDTO);
+    }
+
+    @Override
     public Flux<TransactionDTO> findAll() {
         return transactionRepository.findAll()
                 .map(TransactionEntityMapper::mapToDTO);

@@ -1,12 +1,12 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.aggregates.Account.events.AccountCreated;
-import ec.com.sofka.aggregates.Account.events.AccountUpdated;
-import ec.com.sofka.aggregates.Account.values.objects.Amount;
+import ec.com.sofka.aggregates.account.events.AccountCreated;
+import ec.com.sofka.aggregates.account.events.AccountUpdated;
+import ec.com.sofka.aggregates.account.values.objects.Amount;
 import ec.com.sofka.gateway.dto.AccountDTO;
-import ec.com.sofka.aggregates.Account.entities.account.Account;
-import ec.com.sofka.aggregates.Account.entities.account.values.AccountId;
-import ec.com.sofka.aggregates.Account.entities.account.values.objects.AccountNumber;
+import ec.com.sofka.aggregates.account.entities.account.Account;
+import ec.com.sofka.aggregates.account.entities.account.values.AccountId;
+import ec.com.sofka.aggregates.account.entities.account.values.objects.AccountNumber;
 import ec.com.sofka.queries.responses.AccountResponse;
 import org.springframework.stereotype.Component;
 

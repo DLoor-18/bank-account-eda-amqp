@@ -4,6 +4,7 @@ import ec.com.sofka.data.TransactionRequestDTO;
 import ec.com.sofka.data.TransactionResponseDTO;
 import ec.com.sofka.exceptions.model.ErrorDetails;
 import ec.com.sofka.handlers.transaction.CreateTransactionHandler;
+import ec.com.sofka.handlers.transaction.GetAllTransactionsHandler;
 import ec.com.sofka.validator.RequestValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,12 +30,13 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class TransactionRouter {
     private final RequestValidator requestValidator;
     private final CreateTransactionHandler createTransactionHandler;
+    private final GetAllTransactionsHandler getAllTransactionsHandler;
 
-    public TransactionRouter(RequestValidator requestValidator, CreateTransactionHandler createTransactionHandler) {
+    public TransactionRouter(RequestValidator requestValidator, CreateTransactionHandler createTransactionHandler, GetAllTransactionsHandler getAllTransactionsHandler) {
         this.requestValidator = requestValidator;
         this.createTransactionHandler = createTransactionHandler;
+        this.getAllTransactionsHandler = getAllTransactionsHandler;
     }
-
 
     @Bean
     @RouterOperations({
@@ -81,58 +83,58 @@ public class TransactionRouter {
                             }
                     )
             ),
-//            @RouterOperation(
-//                    path = "/api/transactions",
-//                    method = RequestMethod.GET,
-//                    beanClass = GetAllTransactionsHandler.class,
-//                    beanMethod = "getAllTransactions",
-//                    operation = @Operation(
-//                            tags = {"Transactions"},
-//                            operationId = "getAllTransactions",
-//                            summary = "Get all transactions",
-//                            description = "Get all registered transactions.",
-//                            responses = {
-//                                    @ApiResponse(
-//                                            responseCode = "200",
-//                                            description = "Successfully obtained all registered transactions.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TransactionResponseDTO.class))
-//                                    ),
-//                                    @ApiResponse(
-//                                            responseCode = "400",
-//                                            description = "Bad request.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-//                                    ),
-//                                    @ApiResponse(
-//                                            responseCode = "500",
-//                                            description = "Internal application problems.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-//                                    )
-//                            }
-//                    )
-//            )
+            @RouterOperation(
+                    path = "/api/transactions",
+                    method = RequestMethod.GET,
+                    beanClass = GetAllTransactionsHandler.class,
+                    beanMethod = "getAllTransactions",
+                    operation = @Operation(
+                            tags = {"Transactions"},
+                            operationId = "getAllTransactions",
+                            summary = "Get all transactions",
+                            description = "Get all registered transactions.",
+                            responses = {
+                                    @ApiResponse(
+                                            responseCode = "200",
+                                            description = "Successfully obtained all registered transactions.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TransactionResponseDTO.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "400",
+                                            description = "Bad request.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "500",
+                                            description = "Internal application problems.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    )
+                            }
+                    )
+            )
     })
     public RouterFunction<ServerResponse> transactionsRouters() {
         return RouterFunctions
-                .route(POST("/api/transactions").and(accept(APPLICATION_JSON)), this::saveTransaction);
-//                .andRoute(GET("/api/transactions"), this::allTransactions);
+                .route(POST("/api/transactions").and(accept(APPLICATION_JSON)), this::saveTransaction)
+                .andRoute(GET("/api/transactions"), this::allTransactions);
     }
 
     public Mono<ServerResponse> saveTransaction(ServerRequest request) {
         return request.bodyToMono(TransactionRequestDTO.class)
-                .flatMap(requestValidator::validate)
+                .doOnNext(requestValidator::validate)
                 .flatMap(createTransactionHandler::save)
                 .flatMap(response ->
                         ServerResponse.ok().contentType(APPLICATION_JSON).bodyValue(response));
 
     }
 
-//    public Mono<ServerResponse> allTransactions(ServerRequest request) {
-//        return getAllTransactionsHandler.getAllTransactions()
-//                .collectList()
-//                .flatMap(list -> ServerResponse.ok()
-//                        .contentType(APPLICATION_JSON)
-//                        .bodyValue(list)
-//                );
-//    }
+    public Mono<ServerResponse> allTransactions(ServerRequest request) {
+        return getAllTransactionsHandler.getAll()
+                .collectList()
+                .flatMap(list -> ServerResponse.ok()
+                        .contentType(APPLICATION_JSON)
+                        .bodyValue(list)
+                );
+    }
 
 }

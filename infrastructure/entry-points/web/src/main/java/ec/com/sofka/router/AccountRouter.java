@@ -79,59 +79,20 @@ public class AccountRouter {
                                     )
                             }
                     )
-            ),
-//            @RouterOperation(
-//                    path = "/api/accounts",
-//                    method = RequestMethod.GET,
-//                    beanClass = GetAllAccountsHandler.class,
-//                    beanMethod = "getAllAccounts",
-//                    operation = @Operation(
-//                            tags = {"Accounts"},
-//                            operationId = "getAllAccounts",
-//                            summary = "Get all accounts",
-//                            description = "Get all registered accounts.",
-//                            responses = {
-//                                    @ApiResponse(
-//                                            responseCode = "200",
-//                                            description = "Successfully obtained all registered accounts.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = AccountResponseDTO.class))
-//                                    ),
-//                                    @ApiResponse(
-//                                            responseCode = "400",
-//                                            description = "Bad request.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-//                                    ),
-//                                    @ApiResponse(
-//                                            responseCode = "500",
-//                                            description = "Internal application problems.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-//                                    )
-//                            }
-//                    )
-//            )
+            )
     })
     public RouterFunction<ServerResponse> accountsRouters() {
         return RouterFunctions
                 .route(POST("/api/accounts").and(accept(APPLICATION_JSON)), this::saveAccount);
-//                .andRoute(GET("/api/accounts"), this::allAccounts);
     }
 
     public Mono<ServerResponse> saveAccount(ServerRequest request) {
         return request.bodyToMono(AccountRequestDTO.class)
-                .flatMap(requestValidator::validate)
+                .doOnNext(requestValidator::validate)
                 .flatMap(createAccountHandler::save)
                 .flatMap(response ->
                         ServerResponse.ok().contentType(APPLICATION_JSON).bodyValue(response));
 
     }
-
-//    public Mono<ServerResponse> allAccounts(ServerRequest request) {
-//        return getAllAccountsHandler.getAllAccounts()
-//                .collectList()
-//                .flatMap(list -> ServerResponse.ok()
-//                        .contentType(APPLICATION_JSON)
-//                        .bodyValue(list)
-//                );
-//    }
 
 }

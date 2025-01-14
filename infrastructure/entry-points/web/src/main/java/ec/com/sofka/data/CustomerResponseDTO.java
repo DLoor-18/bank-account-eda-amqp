@@ -9,6 +9,9 @@ public class CustomerResponseDTO implements Serializable {
     private String identityCard;
     private String status;
 
+    public CustomerResponseDTO() {
+    }
+
     public CustomerResponseDTO(String firstName, String lastName, String identityCard, String status) {
         this.firstName = firstName;
         this.lastName = lastName;

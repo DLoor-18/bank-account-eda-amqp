@@ -9,6 +9,9 @@ public class AuthResponseDTO implements Serializable {
         this.token = token;
     }
 
+    public AuthResponseDTO() {
+    }
+
     public String getToken() {
         return token;
     }

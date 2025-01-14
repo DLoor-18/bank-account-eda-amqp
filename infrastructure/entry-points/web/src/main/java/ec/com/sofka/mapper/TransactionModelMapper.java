@@ -20,7 +20,6 @@ public class TransactionModelMapper {
                 transaction.getAccountNumber(),
                 transaction.getDetails(),
                 transaction.getTransactionTypeId(),
-                transaction.getTransactionTypeAggregateId(),
                 transaction.getAccountAggregateId()
         );
 

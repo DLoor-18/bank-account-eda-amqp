@@ -1,6 +1,6 @@
 package ec.com.sofka.commands.usecases.account;
 
-import ec.com.sofka.aggregates.Account.AccountAggregate;
+import ec.com.sofka.aggregates.account.AccountAggregate;
 import ec.com.sofka.gateway.IEventStore;
 import ec.com.sofka.gateway.busMessage.EventBusMessage;
 import ec.com.sofka.generics.interfaces.IUseCaseExecute;

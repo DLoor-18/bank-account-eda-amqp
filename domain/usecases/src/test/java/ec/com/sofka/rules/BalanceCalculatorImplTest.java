@@ -1,8 +1,9 @@
 package ec.com.sofka.rules;
 
-import ec.com.sofka.Transaction;
-import ec.com.sofka.TransactionType;
+import ec.com.sofka.gateway.dto.TransactionDTO;
+import ec.com.sofka.gateway.dto.TransactionTypeDTO;
 import ec.com.sofka.rules.impl.BalanceCalculatorImpl;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,37 +20,38 @@ public class BalanceCalculatorImplTest {
     private final BalanceCalculatorImpl balanceCalculator = new BalanceCalculatorImpl();
 
     @Test
-    public void testCalculate_WithDiscount() {
-        Transaction transaction = mock(Transaction.class);
-        TransactionType transactionType = mock(TransactionType.class);
+    @DisplayName("should subtract transaction amount and fees when transaction has discount")
+    public void shouldSubtractTransactionAmountAndFees_WhenTransactionHasDiscount() {
+        TransactionDTO  transaction = mock(TransactionDTO.class);
+        TransactionTypeDTO transactionType = mock(TransactionTypeDTO.class);
 
-        when(transaction.getValue()).thenReturn(new BigDecimal("100"));
-        when(transactionType.getValue()).thenReturn(new BigDecimal("10"));
+        when(transaction.getAmount()).thenReturn(BigDecimal.valueOf(100));
+        when(transactionType.getValue()).thenReturn(BigDecimal.valueOf(10));
         when(transaction.getTransactionType()).thenReturn(transactionType);
         when(transactionType.getDiscount()).thenReturn(true);
 
-        BigDecimal currentBalance = new BigDecimal("500");
+        BigDecimal currentBalance = BigDecimal.valueOf(500);
 
         BigDecimal result = balanceCalculator.calculate(transaction, currentBalance);
 
-        assertEquals(new BigDecimal("390"), result);
+        assertEquals(BigDecimal.valueOf(390), result);
     }
 
     @Test
-    public void testCalculate_WithoutDiscount() {
-        Transaction transaction = mock(Transaction.class);
-        TransactionType transactionType = mock(TransactionType.class);
+    @DisplayName("should add transaction amount and fees when transaction has no discount")
+    public void shouldAddTransactionAmountAndFees_WhenTransactionHasNoDiscount() {
+        TransactionDTO transaction = mock(TransactionDTO.class);
+        TransactionTypeDTO transactionType = mock(TransactionTypeDTO.class);
 
-        when(transaction.getValue()).thenReturn(new BigDecimal("100"));
-        when(transactionType.getValue()).thenReturn(new BigDecimal("0"));
+        when(transaction.getAmount()).thenReturn(BigDecimal.valueOf(100));
+        when(transactionType.getValue()).thenReturn(BigDecimal.ZERO);
         when(transaction.getTransactionType()).thenReturn(transactionType);
         when(transactionType.getDiscount()).thenReturn(false);
 
-        BigDecimal currentBalance = new BigDecimal("500");
+        BigDecimal currentBalance = BigDecimal.valueOf(500);
 
         BigDecimal result = balanceCalculator.calculate(transaction, currentBalance);
 
-        assertEquals(new BigDecimal("600"), result);
+        assertEquals(BigDecimal.valueOf(600), result);
     }
-
 }

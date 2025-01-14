@@ -10,6 +10,9 @@ public class AccountResponseDTO implements Serializable {
     private String status;
     private CustomerResponseDTO customer;
 
+    public AccountResponseDTO() {
+    }
+
     public AccountResponseDTO(String accountNumber, BigDecimal balance, String status, CustomerResponseDTO customer) {
         this.accountNumber = accountNumber;
         this.balance = balance;

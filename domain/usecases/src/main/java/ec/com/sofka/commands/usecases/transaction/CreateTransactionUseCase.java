@@ -1,6 +1,6 @@
 package ec.com.sofka.commands.usecases.transaction;
 
-import ec.com.sofka.aggregates.Account.AccountAggregate;
+import ec.com.sofka.aggregates.account.AccountAggregate;
 import ec.com.sofka.queries.query.transcationType.FindTransactionTypeByIdUseCase;
 import ec.com.sofka.commands.usecases.account.UpdateAccountUseCase;
 import ec.com.sofka.gateway.IEventStore;
@@ -10,7 +10,7 @@ import ec.com.sofka.generics.interfaces.IUseCaseExecute;
 import ec.com.sofka.mapper.AccountMapper;
 import ec.com.sofka.mapper.TransactionMapper;
 import ec.com.sofka.mapper.TransactionTypeMapper;
-import ec.com.sofka.aggregates.Account.entities.transaction.values.objects.ProcessingDate;
+import ec.com.sofka.aggregates.account.entities.transaction.values.objects.ProcessingDate;
 import ec.com.sofka.commands.AccountCommand;
 import ec.com.sofka.commands.TransactionCommand;
 import ec.com.sofka.queries.responses.TransactionResponse;
@@ -40,7 +40,7 @@ public class CreateTransactionUseCase implements IUseCaseExecute<TransactionComm
 
     @Override
     public Mono<TransactionResponse> execute(TransactionCommand transactionCommand) {
-        return findTransactionTypeByIdUseCase.getUserByAggregate(transactionCommand.getTransactionTypeAggregateId())
+        return findTransactionTypeByIdUseCase.getById(transactionCommand.getTransactionTypeId())
                 .map(TransactionTypeMapper::mapToDTOFromModel)
                 .map(transactionType ->
                         new TransactionDTO(
@@ -50,7 +50,7 @@ public class CreateTransactionUseCase implements IUseCaseExecute<TransactionComm
                                 null,
                                 null,
                                 transactionType))
-                .flatMap(transactionDTO -> validateTransaction.validateTransaction(transactionDTO, transactionCommand.getAccountAggregateId()))
+                .flatMap(transactionDTO -> validateTransaction.validateTransaction(transactionDTO, transactionCommand.getAccountNumber()))
                 .flatMap(transactionDTO -> updateBalanceAndSave(transactionDTO, transactionCommand.getAccountAggregateId()));
 
     }

@@ -1,11 +1,11 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.aggregates.Auth.entities.user.User;
-import ec.com.sofka.aggregates.Auth.entities.user.values.UserId;
-import ec.com.sofka.aggregates.Auth.entities.user.values.objects.Email;
-import ec.com.sofka.aggregates.Auth.entities.user.values.objects.Password;
-import ec.com.sofka.aggregates.Auth.events.UserCreated;
-import ec.com.sofka.aggregates.Auth.events.UserUpdated;
+import ec.com.sofka.aggregates.auth.entities.user.User;
+import ec.com.sofka.aggregates.auth.entities.user.values.UserId;
+import ec.com.sofka.aggregates.auth.entities.user.values.objects.Email;
+import ec.com.sofka.aggregates.auth.entities.user.values.objects.Password;
+import ec.com.sofka.aggregates.auth.events.UserCreated;
+import ec.com.sofka.aggregates.auth.events.UserUpdated;
 import ec.com.sofka.gateway.dto.UserDTO;
 import ec.com.sofka.queries.responses.UserResponse;
 

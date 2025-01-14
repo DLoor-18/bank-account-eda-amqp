@@ -3,7 +3,6 @@ package ec.com.sofka.data;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 
@@ -31,6 +30,8 @@ public class CustomerRequestDTO implements Serializable {
     @Pattern(regexp = "^(ACTIVE|INACTIVE)$", message = "Incorrect status")
     private String status;
 
+    public CustomerRequestDTO() {
+    }
 
     public CustomerRequestDTO(String firstName, String lastName, String identityCard, String email, String password, String status) {
         this.firstName = firstName;

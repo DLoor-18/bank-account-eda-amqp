@@ -15,6 +15,9 @@ public class UserResponseDTO implements Serializable {
         this.userRole = userRole;
     }
 
+    public UserResponseDTO() {
+    }
+
     public String getEmail() {
         return email;
     }

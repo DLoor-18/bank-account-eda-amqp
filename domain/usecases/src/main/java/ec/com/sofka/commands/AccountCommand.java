@@ -9,22 +9,22 @@ public class AccountCommand extends Command {
     private String accountNumber;
     private BigDecimal balance;
     private StatusEnum status;
-    private String customerAggregateId;
+    private String customerId;
 
-    public AccountCommand(String aggregateId, String accountNumber, BigDecimal balance, StatusEnum status, String customerAggregateId) {
+    public AccountCommand(String aggregateId, String accountNumber, BigDecimal balance, StatusEnum status, String customerId) {
         super(aggregateId);
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.customerAggregateId = customerAggregateId;
+        this.customerId = customerId;
     }
 
-    public AccountCommand(String accountNumber, BigDecimal balance, StatusEnum status, String customerAggregateId) {
+    public AccountCommand(String accountNumber, BigDecimal balance, StatusEnum status, String customerId) {
         super(null);
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.customerAggregateId = customerAggregateId;
+        this.customerId = customerId;
     }
 
     public String getAccountNumber() {
@@ -52,10 +52,10 @@ public class AccountCommand extends Command {
     }
 
     public String getUserAggregateId() {
-        return customerAggregateId;
+        return customerId;
     }
 
     public void setUserAggregateId(String customerAggregateId) {
-        this.customerAggregateId = customerAggregateId;
+        this.customerId = customerAggregateId;
     }
 }

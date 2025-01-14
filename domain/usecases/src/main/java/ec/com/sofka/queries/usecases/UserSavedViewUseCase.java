@@ -16,4 +16,5 @@ public class UserSavedViewUseCase implements IUseCaseAccept<UserDTO> {
         userRepository.save(user)
                 .subscribe();
     }
+
 }

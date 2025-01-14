@@ -1,12 +1,12 @@
 package ec.com.sofka;
 
-import ec.com.sofka.aggregates.Account.events.AccountCreated;
-import ec.com.sofka.aggregates.Account.events.AccountUpdated;
-import ec.com.sofka.aggregates.Account.events.TransactionCreated;
-import ec.com.sofka.aggregates.Account.events.TransactionTypeCreated;
-import ec.com.sofka.aggregates.Account.events.CustomerCreated;
-import ec.com.sofka.aggregates.Auth.events.UserCreated;
-import ec.com.sofka.aggregates.Auth.events.UserUpdated;
+import ec.com.sofka.aggregates.account.events.AccountCreated;
+import ec.com.sofka.aggregates.account.events.AccountUpdated;
+import ec.com.sofka.aggregates.account.events.TransactionCreated;
+import ec.com.sofka.aggregates.account.events.TransactionTypeCreated;
+import ec.com.sofka.aggregates.account.events.CustomerCreated;
+import ec.com.sofka.aggregates.auth.events.UserCreated;
+import ec.com.sofka.aggregates.auth.events.UserUpdated;
 import ec.com.sofka.gateway.busMessage.BusEventListener;
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.mapper.*;

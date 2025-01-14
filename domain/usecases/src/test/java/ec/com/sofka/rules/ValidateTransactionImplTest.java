@@ -1,15 +1,16 @@
 package ec.com.sofka.rules;
 
-
-import ec.com.sofka.Account;
-import ec.com.sofka.Transaction;
-import ec.com.sofka.TransactionType;
-import ec.com.sofka.exceptions.RecordNotFoundException;
 import ec.com.sofka.exceptions.TransactionRejectedException;
-import ec.com.sofka.gateway.AccountRepository;
-import ec.com.sofka.gateway.TransactionTypeRepository;
+import ec.com.sofka.gateway.busMessage.ErrorBusMessage;
+import ec.com.sofka.gateway.dto.AccountDTO;
+import ec.com.sofka.gateway.dto.TransactionDTO;
+import ec.com.sofka.gateway.dto.TransactionTypeDTO;
+import ec.com.sofka.mapper.AccountMapper;
+import ec.com.sofka.queries.query.account.FindAccountByNumberUseCase;
 import ec.com.sofka.rules.impl.ValidateTransactionImpl;
+import ec.com.sofka.utils.enums.StatusEnum;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,125 +21,82 @@ import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ValidateTransactionImplTest {
 
     @Mock
-    private AccountRepository accountRepository;
+    private FindAccountByNumberUseCase findAccountByNumberUseCase;
 
     @Mock
-    private TransactionTypeRepository transactionTypeRepository;
+    private ErrorBusMessage errorBusMessage;
 
     @InjectMocks
     private ValidateTransactionImpl validateTransactionImpl;
 
-    private Transaction transaction;
+    private AccountDTO account;
+    private TransactionTypeDTO transactionType;
+    private TransactionDTO transaction;
 
     @BeforeEach
-    public void setUp() {
-        transaction = new Transaction();
-        transaction.setAccountNumber("12345");
-        transaction.setValue(new BigDecimal("100"));
+    void setUp() {
+        account = new AccountDTO("1234567890", new BigDecimal(100), StatusEnum.ACTIVE, null);
+        transactionType = new TransactionTypeDTO("Retire", "retire", new BigDecimal(5), true, true, StatusEnum.ACTIVE);
+        transaction = new TransactionDTO("1234567890", "retire", new BigDecimal(10), "12-01-2025", account, transactionType);
     }
 
     @Test
-    public void testValidateTransaction_Success() {
-        Account account = new Account();
-        account.setNumber("12345");
-        account.setStatus("ACTIVE");
-        account.setAvailableBalance(new BigDecimal("500"));
+    @DisplayName("should validate transaction successfully when account is active and has sufficient funds")
+    void shouldValidateTransactionSuccessfully_WhenAccountIsActiveAndHasSufficientFunds() {
+        transaction.setAmount(new BigDecimal("50"));
+        account.setBalance(new BigDecimal("100"));
 
-        TransactionType transactionType = new TransactionType();
-        transactionType.setDiscount(false);
-        transactionType.setValue(new BigDecimal("10"));
+        when(findAccountByNumberUseCase.getByNumberAccount(anyString()))
+                .thenReturn(Mono.just(AccountMapper.mapToModelFromDTO(account)));
 
-        when(accountRepository.findByNumber("12345")).thenReturn(Mono.just(account));
-        when(transactionTypeRepository.findById("T001")).thenReturn(Mono.just(transactionType));
+        Mono<TransactionDTO> result = validateTransactionImpl.validateTransaction(transaction, "1234567890");
 
-        StepVerifier.create(validateTransactionImpl.validateTransaction(transaction))
+        StepVerifier.create(result)
                 .expectNext(transaction)
-                .verifyComplete();
-
-        verify(accountRepository).findByNumber("12345");
-        verify(transactionTypeRepository).findById("T001");
-    }
-
-    @Test
-    public void testValidateTransaction_AccountNotFound() {
-        when(accountRepository.findByNumber("12345")).thenReturn(Mono.empty());
-        when(transactionTypeRepository.findById("T001")).thenReturn(Mono.just(new TransactionType()));
-
-        StepVerifier.create(validateTransactionImpl.validateTransaction(transaction))
-                .expectError(RecordNotFoundException.class)
+                .expectComplete()
                 .verify();
 
-        verify(accountRepository).findByNumber("12345");
-        verify(transactionTypeRepository).findById("T001");
+        verify(findAccountByNumberUseCase).getByNumberAccount(anyString());
     }
 
     @Test
-    public void testValidateTransaction_TransactionTypeNotFound() {
-        Account account = new Account();
-        account.setNumber("12345");
-        account.setStatus("ACTIVE");
-        account.setAvailableBalance(new BigDecimal("500"));
+    @DisplayName("should reject transaction when account is inactive")
+    void shouldRejectTransaction_WhenAccountIsInactive() {
+        account.setStatus(StatusEnum.INACTIVE);
 
-        when(accountRepository.findByNumber("12345")).thenReturn(Mono.just(account));
-        when(transactionTypeRepository.findById("T001")).thenReturn(Mono.empty());
+        when(findAccountByNumberUseCase.getByNumberAccount(anyString()))
+                .thenReturn(Mono.just(AccountMapper.mapToModelFromDTO(account)));
 
-        StepVerifier.create(validateTransactionImpl.validateTransaction(transaction))
-                .expectError(RecordNotFoundException.class)
-                .verify();
+        Mono<TransactionDTO> result = validateTransactionImpl.validateTransaction(transaction, "1234567890");
 
-        verify(accountRepository).findByNumber("12345");
-        verify(transactionTypeRepository).findById("T001");
-    }
-
-    @Test
-    public void testValidateTransaction_AccountInactive() {
-        Account account = new Account();
-        account.setNumber("12345");
-        account.setStatus("INACTIVE");
-        account.setAvailableBalance(new BigDecimal("500"));
-
-        TransactionType transactionType = new TransactionType();
-        transactionType.setDiscount(false);
-        transactionType.setValue(new BigDecimal("10"));
-
-        when(accountRepository.findByNumber("12345")).thenReturn(Mono.just(account));
-        when(transactionTypeRepository.findById("T001")).thenReturn(Mono.just(transactionType));
-
-        StepVerifier.create(validateTransactionImpl.validateTransaction(transaction))
+        StepVerifier.create(result)
                 .expectError(TransactionRejectedException.class)
                 .verify();
 
-        verify(accountRepository).findByNumber("12345");
-        verify(transactionTypeRepository).findById("T001");
+        verify(findAccountByNumberUseCase).getByNumberAccount(anyString());
     }
 
     @Test
-    public void testValidateTransaction_InsufficientFunds() {
-        Account account = new Account();
-        account.setNumber("12345");
-        account.setStatus("ACTIVE");
-        account.setAvailableBalance(new BigDecimal("50"));
+    @DisplayName("should reject transaction when account has insufficient funds")
+    void shouldRejectTransaction_WhenAccountHasInsufficientFunds() {
+        transaction.setAmount(new BigDecimal("150"));
 
-        TransactionType transactionType = new TransactionType();
-        transactionType.setDiscount(true);
-        transactionType.setValue(new BigDecimal("10"));
+        when(findAccountByNumberUseCase.getByNumberAccount(anyString()))
+                .thenReturn(Mono.just(AccountMapper.mapToModelFromDTO(account)));
 
-        when(accountRepository.findByNumber("12345")).thenReturn(Mono.just(account));
-        when(transactionTypeRepository.findById("T001")).thenReturn(Mono.just(transactionType));
+        Mono<TransactionDTO> result = validateTransactionImpl.validateTransaction(transaction, "1234567890");
 
-        StepVerifier.create(validateTransactionImpl.validateTransaction(transaction))
+        StepVerifier.create(result)
                 .expectError(TransactionRejectedException.class)
                 .verify();
 
-        verify(accountRepository).findByNumber("12345");
-        verify(transactionTypeRepository).findById("T001");
+        verify(findAccountByNumberUseCase).getByNumberAccount(anyString());
     }
-    
+
 }

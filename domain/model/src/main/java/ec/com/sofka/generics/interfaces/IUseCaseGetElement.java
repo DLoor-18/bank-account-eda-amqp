@@ -1,8 +1,8 @@
 package ec.com.sofka.generics.interfaces;
 
-import ec.com.sofka.generics.shared.Request;
+import ec.com.sofka.generics.shared.QueryResponse;
 import org.reactivestreams.Publisher;
 
-public interface IUseCaseGetElement<T extends Request, R> {
-    Publisher<R> get(T request);
+public interface IUseCaseGetElement<PropertyQuery, R> {
+    Publisher<QueryResponse<R>> get(PropertyQuery request);
 }

@@ -24,8 +24,8 @@ public class ValidateTransactionImpl implements ValidateTransaction {
         this.errorBusMessage = errorBusMessage;
     }
 
-    public Mono<TransactionDTO> validateTransaction(TransactionDTO transaction, String accountAggregateId) {
-        return findAccountByNumberUseCase.getByAggregate(accountAggregateId)
+    public Mono<TransactionDTO> validateTransaction(TransactionDTO transaction, String numberAccount) {
+        return findAccountByNumberUseCase.getByNumberAccount(numberAccount)
                 .map(account -> {
                     transaction.setAccount(AccountMapper.mapToDTOFromModel(account));
                     return transaction;

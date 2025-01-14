@@ -8,6 +8,8 @@ public interface TransactionRepository {
 
     Mono<TransactionDTO> save(TransactionDTO transaction);
 
+    Mono<TransactionDTO> findById(String id);
+
     Flux<TransactionDTO> findAll();
 
 }

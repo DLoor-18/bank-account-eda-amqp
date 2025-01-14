@@ -42,8 +42,39 @@ public class UserEntity implements UserDetails {
         this.role = role;
     }
 
+    public UserEntity() {
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(RoleEnum role) {
+        this.role = role;
+    }
+
     public String getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getFirstName() {

@@ -1,10 +1,10 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.aggregates.Account.events.TransactionTypeCreated;
-import ec.com.sofka.aggregates.Account.values.objects.Amount;
+import ec.com.sofka.aggregates.account.events.TransactionTypeCreated;
+import ec.com.sofka.aggregates.account.values.objects.Amount;
 import ec.com.sofka.gateway.dto.TransactionTypeDTO;
-import ec.com.sofka.aggregates.Account.entities.transactionType.TransactionType;
-import ec.com.sofka.aggregates.Account.entities.transactionType.values.TransactionTypeId;
+import ec.com.sofka.aggregates.account.entities.transactionType.TransactionType;
+import ec.com.sofka.aggregates.account.entities.transactionType.values.TransactionTypeId;
 import ec.com.sofka.queries.responses.TransactionTypeResponse;
 import org.springframework.stereotype.Component;
 

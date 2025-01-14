@@ -1,6 +1,6 @@
 package ec.com.sofka.commands.usecases.user;
 
-import ec.com.sofka.aggregates.Auth.AuthAggregate;
+import ec.com.sofka.aggregates.auth.AuthAggregate;
 import ec.com.sofka.commands.UserCommand;
 import ec.com.sofka.exceptions.ConflictException;
 import ec.com.sofka.gateway.IEventStore;
@@ -10,6 +10,7 @@ import ec.com.sofka.gateway.busMessage.EventBusMessage;
 import ec.com.sofka.generics.interfaces.IUseCaseExecute;
 import ec.com.sofka.model.ErrorMessage;
 import ec.com.sofka.queries.responses.UserResponse;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -18,12 +19,14 @@ public class CreateUserUseCase implements IUseCaseExecute<UserCommand, UserRespo
     private final UserRepository userRepository;
     private final ErrorBusMessage errorBusMessage;
     private final EventBusMessage eventBusMessage;
+    private final PasswordEncoder passwordEncoder;
 
-    public CreateUserUseCase(IEventStore repository, UserRepository userRepository, ErrorBusMessage errorBusMessage, EventBusMessage eventBusMessage) {
+    public CreateUserUseCase(IEventStore repository, UserRepository userRepository, ErrorBusMessage errorBusMessage, EventBusMessage eventBusMessage, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.userRepository = userRepository;
         this.errorBusMessage = errorBusMessage;
         this.eventBusMessage = eventBusMessage;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -42,7 +45,7 @@ public class CreateUserUseCase implements IUseCaseExecute<UserCommand, UserRespo
                             userCommand.getFirstName(),
                             userCommand.getLastName(),
                             userCommand.getEmail(),
-                            userCommand.getPassword(),
+                            passwordEncoder.encode(userCommand.getPassword()),
                             userCommand.getRole()
                     );
 

@@ -48,6 +48,9 @@ public class UserUpdateRequestDTO implements Serializable {
         this.userRole = userRole;
     }
 
+    public UserUpdateRequestDTO() {
+    }
+
     public String getAggregateId() {
         return aggregateId;
     }

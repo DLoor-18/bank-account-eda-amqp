@@ -79,59 +79,20 @@ public class TransactionTypeRouter {
                                     )
                             }
                     )
-            ),
-//            @RouterOperation(
-//                    path = "/api/transaction-types",
-//                    method = RequestMethod.GET,
-//                    beanClass = GetAllTransactionTypesHandler.class,
-//                    beanMethod = "getAllTransactionTypes",
-//                    operation = @Operation(
-//                            tags = {"TransactionTypes"},
-//                            operationId = "getAllTransactionTypes",
-//                            summary = "Get all transaction types",
-//                            description = "Get all registered transaction types.",
-//                            responses = {
-//                                    @ApiResponse(
-//                                            responseCode = "200",
-//                                            description = "Successfully obtained all registered transaction types.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TransactionTypeResponseDTO.class))
-//                                    ),
-//                                    @ApiResponse(
-//                                            responseCode = "400",
-//                                            description = "Bad request.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-//                                    ),
-//                                    @ApiResponse(
-//                                            responseCode = "500",
-//                                            description = "Internal application problems.",
-//                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
-//                                    )
-//                            }
-//                    )
-//            )
+            )
     })
     public RouterFunction<ServerResponse> transactionTypesRouters() {
         return RouterFunctions
                 .route(POST("/api/transaction-types").and(accept(APPLICATION_JSON)), this::saveTransactionType);
-//                .andRoute(GET("/api/transaction-types"), this::allTransactionTypes);
     }
 
     public Mono<ServerResponse> saveTransactionType(ServerRequest request) {
         return request.bodyToMono(TransactionTypeRequestDTO.class)
-                .flatMap(requestValidator::validate)
+                .doOnNext(requestValidator::validate)
                 .flatMap(createTransactionTypeHandler::save)
                 .flatMap(response ->
                         ServerResponse.ok().contentType(APPLICATION_JSON).bodyValue(response));
 
     }
-
-//    public Mono<ServerResponse> allTransactionTypes(ServerRequest request) {
-//        return getAllTransactionTypesHandler.getAllTransactionTypes()
-//                .collectList()
-//                .flatMap(list -> ServerResponse.ok()
-//                        .contentType(APPLICATION_JSON)
-//                        .bodyValue(list)
-//                );
-//    }
 
 }
