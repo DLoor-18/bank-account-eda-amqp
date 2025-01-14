@@ -1,6 +1,6 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.aggregates.account.events.CustomerCreated;
+import ec.com.sofka.events.CustomerCreated;
 import ec.com.sofka.gateway.dto.CustomerDTO;
 import ec.com.sofka.aggregates.account.entities.customer.Customer;
 import ec.com.sofka.aggregates.account.entities.customer.values.CustomerId;

@@ -1,6 +1,6 @@
 package ec.com.sofka.commandas.usecases.user;
 
-import ec.com.sofka.aggregates.auth.events.UserUpdated;
+import ec.com.sofka.events.UserUpdated;
 import ec.com.sofka.commands.UserCommand;
 import ec.com.sofka.commands.usecases.user.UpdateUserUseCase;
 import ec.com.sofka.gateway.IEventStore;

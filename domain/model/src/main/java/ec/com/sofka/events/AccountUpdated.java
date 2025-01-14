@@ -1,5 +1,6 @@
-package ec.com.sofka.aggregates.account.events;
+package ec.com.sofka.events;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ec.com.sofka.aggregates.account.entities.customer.Customer;
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.utils.enums.EventsDetailsEnum;
@@ -7,6 +8,7 @@ import ec.com.sofka.utils.enums.StatusEnum;
 
 import java.math.BigDecimal;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountUpdated extends DomainEvent {
     private String accountId;
     private String accountNumber;
@@ -43,7 +45,7 @@ public class AccountUpdated extends DomainEvent {
         return status;
     }
 
-    public Customer getUser() {
+    public Customer getCustomer() {
         return customer;
     }
 

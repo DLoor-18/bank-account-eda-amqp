@@ -1,7 +1,7 @@
 package ec.com.sofka.aggregates.account.handlers;
 
 import ec.com.sofka.aggregates.account.AccountAggregate;
-import ec.com.sofka.aggregates.account.events.TransactionCreated;
+import ec.com.sofka.events.TransactionCreated;
 import ec.com.sofka.aggregates.account.values.objects.Amount;
 import ec.com.sofka.generics.domain.DomainActionsContainer;
 import ec.com.sofka.aggregates.account.entities.transaction.Transaction;

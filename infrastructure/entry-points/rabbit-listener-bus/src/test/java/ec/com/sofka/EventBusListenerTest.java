@@ -1,8 +1,8 @@
 package ec.com.sofka;
 
-import ec.com.sofka.aggregates.account.events.*;
-import ec.com.sofka.aggregates.auth.events.UserCreated;
-import ec.com.sofka.aggregates.auth.events.UserUpdated;
+import ec.com.sofka.events.UserCreated;
+import ec.com.sofka.events.UserUpdated;
+import ec.com.sofka.events.*;
 import ec.com.sofka.queries.usecases.*;
 import ec.com.sofka.utils.enums.RoleEnum;
 import ec.com.sofka.utils.enums.StatusEnum;

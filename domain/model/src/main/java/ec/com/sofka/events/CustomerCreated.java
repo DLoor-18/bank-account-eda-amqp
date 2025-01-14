@@ -1,4 +1,4 @@
-package ec.com.sofka.aggregates.account.events;
+package ec.com.sofka.events;
 
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.utils.enums.EventsDetailsEnum;

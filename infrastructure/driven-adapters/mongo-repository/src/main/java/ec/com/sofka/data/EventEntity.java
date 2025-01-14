@@ -51,7 +51,7 @@ public class EventEntity {
                     .collect(Collectors.joining());
 
             return (DomainEvent) eventSerializer
-                    .readFromJson(this.getEventData(), Class.forName("ec.com.sofka.aggregate.Account.events."+className));
+                    .readFromJson(this.getEventData(), Class.forName("ec.com.sofka.events."+className));
         } catch (ClassNotFoundException e) {
             return null;
         }

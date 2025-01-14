@@ -1,4 +1,4 @@
-package ec.com.sofka.aggregates.account.events;
+package ec.com.sofka.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -47,7 +47,7 @@ public class AccountCreated extends DomainEvent {
         return status;
     }
 
-    public Customer getUser() {
+    public Customer getCustomer() {
         return customer;
     }
 

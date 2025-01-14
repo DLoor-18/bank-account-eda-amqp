@@ -41,11 +41,11 @@ public class Account extends Entity<AccountId> {
         this.status = status;
     }
 
-    public Customer getUser() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setUser(Customer customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 }

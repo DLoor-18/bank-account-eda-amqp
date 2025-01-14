@@ -31,7 +31,7 @@ public class UpdateAccountUseCase implements IUseCaseExecute<AccountCommand, Acc
                             accountAggregate.getAccount().getAccountNumber().getValue(),
                             request.getBalance(),
                             request.getStatus(),
-                            accountAggregate.getAccount().getUser()
+                            accountAggregate.getAccount().getCustomer()
                     );
 
                     return Flux.fromIterable(accountAggregate.getUncommittedEvents())

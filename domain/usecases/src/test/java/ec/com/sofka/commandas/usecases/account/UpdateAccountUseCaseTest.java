@@ -2,7 +2,7 @@ package ec.com.sofka.commandas.usecases.account;
 
 import static org.mockito.Mockito.*;
 
-import ec.com.sofka.aggregates.account.events.AccountUpdated;
+import ec.com.sofka.events.AccountUpdated;
 import ec.com.sofka.commands.AccountCommand;
 import ec.com.sofka.commands.usecases.account.UpdateAccountUseCase;
 import ec.com.sofka.gateway.IEventStore;

@@ -26,18 +26,18 @@ public class AccountRequestDTO implements Serializable {
     @Pattern(regexp = "^(ACTIVE|INACTIVE)$", message = "Incorrect status")
     private String status;
 
-    @Schema(description = "Customer Aggregate ID")
-    @NotNull(message = "customerAggregateId cannot be null")
-    private String customerAggregateId;
+    @Schema(description = "Customer ID")
+    @NotNull(message = "customerId cannot be null")
+    private String customerId;
 
     public AccountRequestDTO() {
     }
 
-    public AccountRequestDTO(String accountNumber, BigDecimal balance, String status, String customerAggregateId) {
+    public AccountRequestDTO(String accountNumber, BigDecimal balance, String status, String customerId) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
-        this.customerAggregateId = customerAggregateId;
+        this.customerId = customerId;
     }
 
     public String getAccountNumber() {
@@ -52,8 +52,8 @@ public class AccountRequestDTO implements Serializable {
         return status;
     }
 
-    public String getCustomerAggregateId() {
-        return customerAggregateId;
+    public String getCustomerId() {
+        return customerId;
     }
 
 }

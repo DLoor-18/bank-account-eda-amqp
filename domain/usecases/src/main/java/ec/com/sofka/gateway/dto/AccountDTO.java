@@ -60,11 +60,11 @@ public class AccountDTO {
         this.status = status;
     }
 
-    public CustomerDTO getUser() {
+    public CustomerDTO getCustomer() {
         return customerDTO;
     }
 
-    public void setUser(CustomerDTO customerDTO) {
+    public void setCustomer(CustomerDTO customerDTO) {
         this.customerDTO = customerDTO;
     }
 

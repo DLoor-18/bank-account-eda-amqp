@@ -3,7 +3,7 @@ package ec.com.sofka.mapper;
 import ec.com.sofka.aggregates.account.entities.transaction.values.TransactionId;
 import ec.com.sofka.aggregates.account.entities.transaction.values.objects.ProcessingDate;
 import ec.com.sofka.aggregates.account.entities.transaction.values.objects.TransactionAccount;
-import ec.com.sofka.aggregates.account.events.TransactionCreated;
+import ec.com.sofka.events.TransactionCreated;
 import ec.com.sofka.aggregates.account.values.objects.Amount;
 import ec.com.sofka.gateway.dto.TransactionDTO;
 import ec.com.sofka.aggregates.account.entities.transaction.Transaction;

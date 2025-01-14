@@ -2,8 +2,8 @@ package ec.com.sofka.aggregates.auth;
 
 import ec.com.sofka.aggregates.auth.entities.user.User;
 import ec.com.sofka.aggregates.auth.entities.user.values.UserId;
-import ec.com.sofka.aggregates.auth.events.UserCreated;
-import ec.com.sofka.aggregates.auth.events.UserUpdated;
+import ec.com.sofka.events.UserCreated;
+import ec.com.sofka.events.UserUpdated;
 import ec.com.sofka.aggregates.auth.handlers.UserHandler;
 import ec.com.sofka.aggregates.auth.values.AuthAggregateId;
 import ec.com.sofka.generics.domain.DomainEvent;

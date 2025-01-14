@@ -1,6 +1,6 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.aggregates.account.events.TransactionTypeCreated;
+import ec.com.sofka.events.TransactionTypeCreated;
 import ec.com.sofka.aggregates.account.values.objects.Amount;
 import ec.com.sofka.gateway.dto.TransactionTypeDTO;
 import ec.com.sofka.aggregates.account.entities.transactionType.TransactionType;

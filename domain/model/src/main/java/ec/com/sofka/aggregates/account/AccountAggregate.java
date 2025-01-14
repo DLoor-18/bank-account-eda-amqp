@@ -1,11 +1,11 @@
 package ec.com.sofka.aggregates.account;
 
-import ec.com.sofka.aggregates.account.events.*;
 import ec.com.sofka.aggregates.account.handlers.AccountHandler;
 import ec.com.sofka.aggregates.account.handlers.TransactionHandler;
 import ec.com.sofka.aggregates.account.handlers.TransactionTypeHandler;
 import ec.com.sofka.aggregates.account.handlers.CustomerHandler;
 import ec.com.sofka.aggregates.account.values.AccountAggregateId;
+import ec.com.sofka.events.*;
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.generics.shared.AggregateRoot;
 import ec.com.sofka.aggregates.account.entities.account.Account;

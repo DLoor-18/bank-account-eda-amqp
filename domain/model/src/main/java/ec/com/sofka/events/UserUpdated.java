@@ -1,10 +1,10 @@
-package ec.com.sofka.aggregates.auth.events;
+package ec.com.sofka.events;
 
 import ec.com.sofka.generics.domain.DomainEvent;
 import ec.com.sofka.utils.enums.EventsDetailsEnum;
 import ec.com.sofka.utils.enums.RoleEnum;
 
-public class UserCreated extends DomainEvent {
+public class UserUpdated extends DomainEvent {
     private String userId;
     private String firstName;
     private String lastName;
@@ -12,8 +12,8 @@ public class UserCreated extends DomainEvent {
     private String password;
     private RoleEnum role;
 
-    public UserCreated(String userId, String firstName, String lastName, String email, String password, RoleEnum role) {
-        super(EventsDetailsEnum.USER_CREATED.getEventType());
+    public UserUpdated(String userId, String firstName, String lastName, String email, String password, RoleEnum role) {
+        super(EventsDetailsEnum.USER_UPDATED.getEventType());
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,8 +22,8 @@ public class UserCreated extends DomainEvent {
         this.role = role;
     }
 
-    public UserCreated() {
-        super(EventsDetailsEnum.USER_CREATED.getEventType());
+    public UserUpdated() {
+        super(EventsDetailsEnum.USER_UPDATED.getEventType());
     }
 
     public String getUserId() {

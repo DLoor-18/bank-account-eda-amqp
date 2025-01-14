@@ -19,7 +19,7 @@ public class AccountModelMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 StatusEnum.valueOf(account.getStatus()),
-                account.getCustomerAggregateId()
+                account.getCustomerId()
     );
 
     }

@@ -1,7 +1,7 @@
 package ec.com.sofka.mapper;
 
-import ec.com.sofka.aggregates.account.events.AccountCreated;
-import ec.com.sofka.aggregates.account.events.AccountUpdated;
+import ec.com.sofka.events.AccountCreated;
+import ec.com.sofka.events.AccountUpdated;
 import ec.com.sofka.aggregates.account.values.objects.Amount;
 import ec.com.sofka.gateway.dto.AccountDTO;
 import ec.com.sofka.aggregates.account.entities.account.Account;
@@ -23,7 +23,7 @@ public class AccountMapper {
                 AccountNumber.of(account.getAccountNumber()),
                 Amount.of(account.getBalance()),
                 account.getStatus(),
-                CustomerMapper.mapToModelFromDTO(account.getUser()));
+                CustomerMapper.mapToModelFromDTO(account.getCustomer()));
     }
 
     public static AccountResponse mapToResponseFromModel(Account account) {
@@ -35,7 +35,7 @@ public class AccountMapper {
                 account.getAccountNumber().getValue(),
                 account.getBalance().getValue(),
                 account.getStatus(),
-                CustomerMapper.mapToResponseFromModel(account.getUser()));
+                CustomerMapper.mapToResponseFromModel(account.getCustomer()));
     }
 
     public static AccountResponse mapToResponseFromDTO(AccountDTO account) {
@@ -47,7 +47,7 @@ public class AccountMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 account.getStatus(),
-                CustomerMapper.mapToResponseFromDTO(account.getUser()));
+                CustomerMapper.mapToResponseFromDTO(account.getCustomer()));
     }
 
     public static AccountDTO mapToDTOFromModel(Account account) {
@@ -60,7 +60,7 @@ public class AccountMapper {
                 account.getAccountNumber().getValue(),
                 account.getBalance().getValue(),
                 account.getStatus(),
-                account.getUser() != null ? CustomerMapper.mapToDTOFromModel(account.getUser()) : null);
+                account.getCustomer() != null ? CustomerMapper.mapToDTOFromModel(account.getCustomer()) : null);
     }
 
     public static AccountDTO mapToDTOFromCreatedEvent(AccountCreated account) {
@@ -73,7 +73,7 @@ public class AccountMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 account.getStatus(),
-                CustomerMapper.mapToDTOFromModel(account.getUser()));
+                CustomerMapper.mapToDTOFromModel(account.getCustomer()));
     }
 
     public static AccountDTO mapToDTOFromUpdatesEvent(AccountUpdated account) {
@@ -86,7 +86,7 @@ public class AccountMapper {
                 account.getAccountNumber(),
                 account.getBalance(),
                 account.getStatus(),
-                CustomerMapper.mapToDTOFromModel(account.getUser()));
+                CustomerMapper.mapToDTOFromModel(account.getCustomer()));
     }
 
 }
