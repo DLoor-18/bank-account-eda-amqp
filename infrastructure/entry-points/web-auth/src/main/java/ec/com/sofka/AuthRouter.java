@@ -1,6 +1,5 @@
 package ec.com.sofka;
 
-import ec.com.sofka.aggregates.auth.handlers.UserHandler;
 import ec.com.sofka.data.*;
 import ec.com.sofka.exceptions.model.ErrorDetails;
 import ec.com.sofka.handler.AuthHandler;
@@ -42,12 +41,12 @@ public class AuthRouter {
                     path = "/api/auth/login",
                     produces = {MediaType.APPLICATION_JSON_VALUE},
                     method = RequestMethod.POST,
-                    beanClass = UserHandler.class,
-                    beanMethod = "login",
+                    beanClass = AuthHandler.class,
+                    beanMethod = "authenticate",
                     operation = @Operation(
                             tags = {"Login"},
-                            operationId = "login",
-                            summary = "login user",
+                            operationId = "authenticate",
+                            summary = "authenticate user",
                             description = "Login user from the request data.",
                             requestBody = @RequestBody(
                                     description = "Details of the required entity.",
@@ -64,13 +63,13 @@ public class AuthRouter {
                                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponseDTO.class))
                                     ),
                                     @ApiResponse(
-                                            responseCode = "400",
-                                            description = "Bad request.",
+                                            responseCode = "401",
+                                            description = "User Unauthorized.",
                                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
                                     ),
                                     @ApiResponse(
-                                            responseCode = "422",
-                                            description = "The entity has a conflict.",
+                                            responseCode = "403",
+                                            description = "Request Forbidden.",
                                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
                                     ),
                                     @ApiResponse(

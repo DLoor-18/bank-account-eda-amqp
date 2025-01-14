@@ -1,4 +1,4 @@
-package ec.com.sofka.events;
+package ec.com.sofka.config;
 
 import ec.com.sofka.repository.account.IUserRepository;
 import org.springframework.context.annotation.Bean;

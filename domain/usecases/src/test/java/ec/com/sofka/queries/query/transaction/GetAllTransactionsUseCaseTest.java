@@ -1,4 +1,4 @@
-package ec.com.sofka.commandas.usecases.transaction;
+package ec.com.sofka.queries.query.transaction;
 
 import ec.com.sofka.aggregates.account.entities.transaction.Transaction;
 import ec.com.sofka.aggregates.account.entities.transaction.values.TransactionId;
@@ -7,7 +7,6 @@ import ec.com.sofka.aggregates.account.entities.transaction.values.objects.Trans
 import ec.com.sofka.aggregates.account.values.objects.Amount;
 import ec.com.sofka.gateway.TransactionRepository;
 import ec.com.sofka.mapper.TransactionMapper;
-import ec.com.sofka.queries.query.transaction.GetAllTransactionsUseCase;
 import ec.com.sofka.queries.responses.TransactionResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

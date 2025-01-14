@@ -44,8 +44,8 @@ public class CustomerRouter {
                     beanClass = CreateCustomerHandler.class,
                     beanMethod = "save",
                     operation = @Operation(
-                            tags = {"Users"},
-                            operationId = "createUser",
+                            tags = {"Customers"},
+                            operationId = "createCustomer",
                             summary = "Create a new customer",
                             description = "Create a new customer from the request data.",
                             requestBody = @RequestBody(

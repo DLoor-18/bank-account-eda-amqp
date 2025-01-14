@@ -1,4 +1,5 @@
 dependencies {
+    implementation project(':model')
     implementation project( ':mongo-repository')
     implementation project( ':app-exception')
 

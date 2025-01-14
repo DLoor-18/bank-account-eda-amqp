@@ -25,7 +25,7 @@ public class CreateAccountUseCase implements IUseCaseExecute<AccountCommand, Acc
     public Mono<AccountResponse> execute(AccountCommand accountCommand) {
         AccountAggregate accountAggregate = new AccountAggregate();
 
-        return findCustomerByIdUseCase.getById(accountCommand.getUserAggregateId())
+        return findCustomerByIdUseCase.getById(accountCommand.getCustomerId())
                 .flatMap(customer -> {
                     accountAggregate.createAccount(
                             accountCommand.getAccountNumber(),

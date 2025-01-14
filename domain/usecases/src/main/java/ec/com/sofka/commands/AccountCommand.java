@@ -51,11 +51,11 @@ public class AccountCommand extends Command {
         this.status = status;
     }
 
-    public String getUserAggregateId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setUserAggregateId(String customerAggregateId) {
+    public void setCustomerId(String customerAggregateId) {
         this.customerId = customerAggregateId;
     }
 }

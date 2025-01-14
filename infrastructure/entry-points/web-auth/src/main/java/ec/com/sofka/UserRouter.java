@@ -45,7 +45,7 @@ public class UserRouter {
                     path = "/api/auth/register",
                     produces = {MediaType.APPLICATION_JSON_VALUE},
                     method = RequestMethod.POST,
-                    beanClass = UserHandler.class,
+                    beanClass = UserAuthHandler.class,
                     beanMethod = "save",
                     operation = @Operation(
                             tags = {"Users"},
@@ -88,7 +88,7 @@ public class UserRouter {
                     path = "/api/auth/user-update",
                     produces = {MediaType.APPLICATION_JSON_VALUE},
                     method = RequestMethod.PUT,
-                    beanClass = UserHandler.class,
+                    beanClass = UserAuthHandler.class,
                     beanMethod = "update",
                     operation = @Operation(
                             tags = {"Users"},

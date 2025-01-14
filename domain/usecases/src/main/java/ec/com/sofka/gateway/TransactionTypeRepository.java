@@ -12,6 +12,6 @@ public interface TransactionTypeRepository {
 
     Mono<TransactionTypeDTO> findById(String transactionTypeId);
 
-    Mono<TransactionTypeDTO> findByType(String transactionTypeId);
+    Mono<TransactionTypeDTO> findByType(String transactionType);
 
 }

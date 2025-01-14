@@ -1,4 +1,4 @@
-package ec.com.sofka.events;
+package ec.com.sofka.config;
 
 import com.mongodb.ConnectionString;
 import org.springframework.beans.factory.annotation.Qualifier;

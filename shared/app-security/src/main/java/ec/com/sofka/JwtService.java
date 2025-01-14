@@ -22,6 +22,8 @@ import java.util.function.Function;
 public class JwtService {
 
     private final Environment environment;
+    private final static String secretKey = "cc9e5246b722f110a843db98c7e6620e88a177aebc620627bacbb999e08f493f";
+    private final static String timeExpiration = "900000";
 
     public JwtService(Environment environment) {
         this.environment = environment;
@@ -45,7 +47,8 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(Objects.requireNonNull(environment.getProperty("jwt.expiration")))))
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(
+                        Objects.requireNonNull(environment!= null ? environment.getProperty("jwt.expiration"): timeExpiration))))
                 .signWith(getSignIngKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -72,7 +75,7 @@ public class JwtService {
     }
 
     public Key getSignIngKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(environment.getProperty("secret.key"));
+        byte[] keyBytes = Decoders.BASE64.decode(environment!= null ? environment.getProperty("secret.key"): secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

@@ -1,4 +1,4 @@
-package ec.com.sofka.events;
+package ec.com.sofka.config;
 
 import ec.com.sofka.utils.enums.EventsDetailsEnum;
 import org.springframework.amqp.core.*;
