@@ -26,6 +26,7 @@ public class TransactionTypeEntityMapper {
             return null;
         }
         return new TransactionTypeDTO(
+                transactionTypeEntity.getId(),
                 transactionTypeEntity.getType(),
                 transactionTypeEntity.getDescription(),
                 transactionTypeEntity.getValue(),

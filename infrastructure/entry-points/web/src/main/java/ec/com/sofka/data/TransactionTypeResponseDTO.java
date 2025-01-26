@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class TransactionTypeResponseDTO implements Serializable {
-
+    private String id;
     private String type;
     private String description;
     private BigDecimal value;
@@ -12,13 +12,22 @@ public class TransactionTypeResponseDTO implements Serializable {
     private Boolean discount;
     private String status;
 
-    public TransactionTypeResponseDTO(String type, String description, BigDecimal value, Boolean transactionCost, Boolean discount, String status) {
+    public TransactionTypeResponseDTO(String id, String type, String description, BigDecimal value, Boolean transactionCost, Boolean discount, String status) {
+        this.id = id;
         this.type = type;
         this.description = description;
         this.value = value;
         this.transactionCost = transactionCost;
         this.discount = discount;
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getType() {

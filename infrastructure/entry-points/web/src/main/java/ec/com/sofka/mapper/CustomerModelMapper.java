@@ -27,6 +27,7 @@ public class CustomerModelMapper {
         }
 
         return new CustomerResponseDTO(
+                customer.getId(),
                 customer.getFirstName(),
                 customer.getLastName(),
                 customer.getIdentityCard(),

@@ -49,6 +49,7 @@ public class TransactionMapper {
         }
 
         return new TransactionResponse(
+                transaction.getId().getValue(),
                 transaction.getTransactionAccount().getValue(),
                 transaction.getDetails(),
                 transaction.getAmount().getValue(),

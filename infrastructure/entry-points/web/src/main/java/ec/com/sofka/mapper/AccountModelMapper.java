@@ -30,6 +30,7 @@ public class AccountModelMapper {
         }
 
         return new AccountResponseDTO(
+                account.getId(),
                 account.getNumber(),
                 account.getBalance(),
                 account.getStatus().name(),

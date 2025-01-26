@@ -24,6 +24,7 @@ public class CustomerEntityMapper {
             return null;
         }
         return new CustomerDTO(
+                customerEntity.getId(),
                 customerEntity.getFirstName(),
                 customerEntity.getLastName(),
                 customerEntity.getIdentityCard(),

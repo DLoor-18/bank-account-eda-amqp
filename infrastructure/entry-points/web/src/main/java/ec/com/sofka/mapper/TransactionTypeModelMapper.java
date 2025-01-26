@@ -30,6 +30,7 @@ public class TransactionTypeModelMapper {
             return null;
         }
         return new TransactionTypeResponseDTO(
+                transactionType.getId(),
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue(),

@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class TransactionTypeResponse implements Serializable {
+    private String id;
     private String type;
     private String description;
     private BigDecimal value;
@@ -13,13 +14,22 @@ public class TransactionTypeResponse implements Serializable {
     private Boolean discount;
     private StatusEnum status;
 
-    public TransactionTypeResponse(String type, String description, BigDecimal value, Boolean transactionCost, Boolean discount, StatusEnum status) {
+    public TransactionTypeResponse(String id, String type, String description, BigDecimal value, Boolean transactionCost, Boolean discount, StatusEnum status) {
+        this.id = id;
         this.type = type;
         this.description = description;
         this.value = value;
         this.transactionCost = transactionCost;
         this.discount = discount;
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getType() {

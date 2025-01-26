@@ -31,6 +31,7 @@ public class TransactionTypeMapper {
             return null;
         }
         return new TransactionTypeResponse(
+                transactionType.getId().getValue(),
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue().getValue(),
@@ -45,6 +46,7 @@ public class TransactionTypeMapper {
             return null;
         }
         return new TransactionTypeResponse(
+                transactionType.getId(),
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue(),

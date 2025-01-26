@@ -50,7 +50,7 @@ public class TransactionRouterTest {
         webTestClient = WebTestClient.bindToRouterFunction(transactionRouter.transactionsRouters()).build();
 
         transactionRequest = new TransactionRequestDTO(new BigDecimal(100), new Date().toString(), "2222222222", "transaction", "ACTIVE", "u1", "u2");
-        transactionResponse = new TransactionResponseDTO("2222222222", "transaction", new BigDecimal(100), new Date().toString(), null,null);
+        transactionResponse = new TransactionResponseDTO("1", "2222222222", "transaction", new BigDecimal(100), new Date().toString(), null,null);
 
     }
 

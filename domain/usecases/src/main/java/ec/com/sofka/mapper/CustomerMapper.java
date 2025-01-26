@@ -27,6 +27,7 @@ public class CustomerMapper {
         }
 
         return new CustomerResponse(
+                customer.getId().getValue(),
                 customer.getFirstName(),
                 customer.getLastName(),
                 customer.getIdentityCard().getValue(),
@@ -40,6 +41,7 @@ public class CustomerMapper {
         }
 
         return new CustomerResponse(
+                customer.getId(),
                 customer.getFirstName(),
                 customer.getLastName(),
                 customer.getIdentityCard(),

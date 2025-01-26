@@ -28,6 +28,7 @@ public class AccountEntityMapper {
         }
 
         return new AccountDTO(
+                accountEntity.getId(),
                 accountEntity.getAccountNumber(),
                 accountEntity.getBalance(),
                 accountEntity.getStatus(),

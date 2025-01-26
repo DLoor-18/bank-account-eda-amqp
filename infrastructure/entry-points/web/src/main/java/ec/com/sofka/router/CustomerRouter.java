@@ -1,9 +1,11 @@
 package ec.com.sofka.router;
 
+import ec.com.sofka.data.AccountResponseDTO;
 import ec.com.sofka.data.CustomerRequestDTO;
 import ec.com.sofka.data.CustomerResponseDTO;
 import ec.com.sofka.exceptions.model.ErrorDetails;
 import ec.com.sofka.handlers.customer.CreateCustomerHandler;
+import ec.com.sofka.handlers.customer.GetAllCustomersHandler;
 import ec.com.sofka.validator.RequestValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,10 +31,12 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class CustomerRouter {
     private final RequestValidator requestValidator;
     private final CreateCustomerHandler createCustomerHandler;
+    private final GetAllCustomersHandler getAllCustomersHandler;
 
-    public CustomerRouter(RequestValidator requestValidator, CreateCustomerHandler createCustomerHandler) {
+    public CustomerRouter(RequestValidator requestValidator, CreateCustomerHandler createCustomerHandler, GetAllCustomersHandler getAllCustomersHandler) {
         this.requestValidator = requestValidator;
         this.createCustomerHandler = createCustomerHandler;
+        this.getAllCustomersHandler = getAllCustomersHandler;
     }
 
     @Bean
@@ -79,11 +83,42 @@ public class CustomerRouter {
                                     )
                             }
                     )
+            ),
+            @RouterOperation(
+                    path = "/api/customers",
+                    produces = {MediaType.APPLICATION_JSON_VALUE},
+                    method = RequestMethod.GET,
+                    beanClass = GetAllCustomersHandler.class,
+                    beanMethod = "getAll",
+                    operation = @Operation(
+                            tags = {"Customers"},
+                            operationId = "getAllCustomers",
+                            summary = "Get all customers",
+                            description = "Get all registered customers.",
+                            responses = {
+                                    @ApiResponse(
+                                            responseCode = "200",
+                                            description = "Successfully obtained all registered customers.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = AccountResponseDTO.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "400",
+                                            description = "Bad request.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "500",
+                                            description = "Internal application problems.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    )
+                            }
+                    )
             )
     })
     public RouterFunction<ServerResponse> customersRouters() {
         return RouterFunctions
-                .route(POST("/api/customers").and(accept(APPLICATION_JSON)), this::saveCustomer);
+                .route(POST("/api/customers").and(accept(APPLICATION_JSON)), this::saveCustomer)
+                .andRoute(GET("/api/customers"), this::allCustomers);
     }
 
     public Mono<ServerResponse> saveCustomer(ServerRequest request) {
@@ -93,6 +128,15 @@ public class CustomerRouter {
                 .flatMap(response ->
                         ServerResponse.ok().contentType(APPLICATION_JSON).bodyValue(response));
 
+    }
+
+    public Mono<ServerResponse> allCustomers(ServerRequest request) {
+        return getAllCustomersHandler.getAll()
+                .collectList()
+                .flatMap(list -> ServerResponse.ok()
+                        .contentType(APPLICATION_JSON)
+                        .bodyValue(list)
+                );
     }
 
 }

@@ -4,21 +4,29 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class TransactionResponseDTO implements Serializable {
-
+    private String id;
     private String accountNumber;
     private String details;
     private BigDecimal amount;
     private String processingDate;
     private AccountResponseDTO account;
-    private TransactionTypeResponseDTO typeTransaction;
+    private TransactionTypeResponseDTO transactionType;
 
-    public TransactionResponseDTO(String accountNumber,String details, BigDecimal amount, String processingDate, AccountResponseDTO account, TransactionTypeResponseDTO typeTransaction) {
+    public TransactionResponseDTO(String id, String accountNumber,String details, BigDecimal amount, String processingDate, AccountResponseDTO account, TransactionTypeResponseDTO transactionType) {
         this.accountNumber = accountNumber;
         this.details = details;
         this.amount = amount;
         this.processingDate = processingDate;
         this.account = account;
-        this.typeTransaction = typeTransaction;
+        this.transactionType = transactionType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAccountNumber() {
@@ -29,12 +37,12 @@ public class TransactionResponseDTO implements Serializable {
         this.accountNumber = accountNumber;
     }
 
-    public TransactionTypeResponseDTO getTypeTransaction() {
-        return typeTransaction;
+    public TransactionTypeResponseDTO getTransactionType() {
+        return transactionType;
     }
 
-    public void setTypeTransaction(TransactionTypeResponseDTO typeTransaction) {
-        this.typeTransaction = typeTransaction;
+    public void setTransactionType(TransactionTypeResponseDTO transactionType) {
+        this.transactionType = transactionType;
     }
 
     public AccountResponseDTO getAccount() {

@@ -5,16 +5,26 @@ import ec.com.sofka.utils.enums.StatusEnum;
 import java.io.Serializable;
 
 public class CustomerResponse implements Serializable {
+    private String id;
     private String firstName;
     private String lastName;
     private String identityCard;
     private StatusEnum status;
 
-    public CustomerResponse(String firstName, String lastName, String identityCard, StatusEnum status) {
+    public CustomerResponse(String id, String firstName, String lastName, String identityCard, StatusEnum status) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.identityCard = identityCard;
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {

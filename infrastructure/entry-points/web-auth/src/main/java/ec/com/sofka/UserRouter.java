@@ -5,7 +5,9 @@ import ec.com.sofka.data.UserRequestDTO;
 import ec.com.sofka.data.UserResponseDTO;
 import ec.com.sofka.data.UserUpdateRequestDTO;
 import ec.com.sofka.exceptions.model.ErrorDetails;
+import ec.com.sofka.handler.GetAllUserHandler;
 import ec.com.sofka.handler.UserAuthHandler;
+import ec.com.sofka.queries.query.user.GetAllUserUseCase;
 import ec.com.sofka.validator.RequestValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,24 +27,24 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
-import static org.springframework.web.reactive.function.server.RequestPredicates.PUT;
-import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 
 @Configuration
 public class UserRouter {
     private final RequestValidator requestValidator;
     private final UserAuthHandler userHandler;
+    private final GetAllUserHandler getAllUserHandler;
 
-    public UserRouter(RequestValidator requestValidator, UserAuthHandler userHandler) {
+    public UserRouter(RequestValidator requestValidator, UserAuthHandler userHandler, GetAllUserHandler getAllUserHandler) {
         this.requestValidator = requestValidator;
         this.userHandler = userHandler;
+        this.getAllUserHandler = getAllUserHandler;
     }
 
     @Bean
     @RouterOperations({
             @RouterOperation(
-                    path = "/api/auth/register",
+                    path = "/api/auth/users",
                     produces = {MediaType.APPLICATION_JSON_VALUE},
                     method = RequestMethod.POST,
                     beanClass = UserAuthHandler.class,
@@ -85,7 +87,7 @@ public class UserRouter {
                     )
             ),
             @RouterOperation(
-                    path = "/api/auth/user-update",
+                    path = "/api/auth/users",
                     produces = {MediaType.APPLICATION_JSON_VALUE},
                     method = RequestMethod.PUT,
                     beanClass = UserAuthHandler.class,
@@ -126,12 +128,43 @@ public class UserRouter {
                                     )
                             }
                     )
+            ),
+            @RouterOperation(
+                    path = "/api/auth/users",
+                    produces = {MediaType.APPLICATION_JSON_VALUE},
+                    method = RequestMethod.GET,
+                    beanClass = UserAuthHandler.class,
+                    beanMethod = "update",
+                    operation = @Operation(
+                            tags = {"Users"},
+                            operationId = "getAllUsers",
+                            summary = "Get all users",
+                            description = "Get all registered users.",
+                            responses = {
+                                    @ApiResponse(
+                                            responseCode = "200",
+                                            description = "Successfully obtained all registered users.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "400",
+                                            description = "Bad request.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "500",
+                                            description = "Internal application problems.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    )
+                            }
+                    )
             )
     })
     public RouterFunction<ServerResponse> usersRouters() {
         return RouterFunctions
-                .route(POST("/api/auth/register").and(accept(APPLICATION_JSON)), this::saveUser)
-                .andRoute(PUT("/api/auth/user-update").and(accept(APPLICATION_JSON)), this::updateUser);
+                .route(POST("/api/auth/users").and(accept(APPLICATION_JSON)), this::saveUser)
+                .andRoute(PUT("/api/auth/users").and(accept(APPLICATION_JSON)), this::updateUser)
+                .andRoute(GET("/api/auth/users"), this::allUsers);
     }
 
     public Mono<ServerResponse> saveUser(ServerRequest request) {
@@ -150,6 +183,15 @@ public class UserRouter {
                 .flatMap(response ->
                         ServerResponse.ok().contentType(APPLICATION_JSON).bodyValue(response));
 
+    }
+
+    public Mono<ServerResponse> allUsers(ServerRequest request) {
+        return getAllUserHandler.getAll()
+                .collectList()
+                .flatMap(list -> ServerResponse.ok()
+                        .contentType(APPLICATION_JSON)
+                        .bodyValue(list)
+                );
     }
 
 }

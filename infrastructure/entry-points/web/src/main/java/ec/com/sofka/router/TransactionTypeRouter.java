@@ -1,9 +1,11 @@
 package ec.com.sofka.router;
 
+import ec.com.sofka.data.TransactionResponseDTO;
 import ec.com.sofka.data.TransactionTypeRequestDTO;
 import ec.com.sofka.data.TransactionTypeResponseDTO;
 import ec.com.sofka.exceptions.model.ErrorDetails;
 import ec.com.sofka.handlers.transcationType.CreateTransactionTypeHandler;
+import ec.com.sofka.handlers.transcationType.GetAllTransactionTypesHandler;
 import ec.com.sofka.validator.RequestValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,10 +31,12 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class TransactionTypeRouter {
     private final RequestValidator requestValidator;
     private final CreateTransactionTypeHandler createTransactionTypeHandler;
+    private final GetAllTransactionTypesHandler getAllTransactionTypesHandler;
 
-    public TransactionTypeRouter(RequestValidator requestValidator, CreateTransactionTypeHandler createTransactionTypeHandler) {
+    public TransactionTypeRouter(RequestValidator requestValidator, CreateTransactionTypeHandler createTransactionTypeHandler, GetAllTransactionTypesHandler getAllTransactionTypesHandler) {
         this.requestValidator = requestValidator;
         this.createTransactionTypeHandler = createTransactionTypeHandler;
+        this.getAllTransactionTypesHandler = getAllTransactionTypesHandler;
     }
 
     @Bean
@@ -79,11 +83,42 @@ public class TransactionTypeRouter {
                                     )
                             }
                     )
+            ),
+            @RouterOperation(
+                    path = "/api/transaction-types",
+                    produces = {MediaType.APPLICATION_JSON_VALUE},
+                    method = RequestMethod.GET,
+                    beanClass = GetAllTransactionTypesHandler.class,
+                    beanMethod = "getAll",
+                    operation = @Operation(
+                            tags = {"TransactionTypes"},
+                            operationId = "getAllTransactionTypes",
+                            summary = "Get all transaction types",
+                            description = "Get all registered transaction types.",
+                            responses = {
+                                    @ApiResponse(
+                                            responseCode = "200",
+                                            description = "Successfully obtained all registered transaction types.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = TransactionResponseDTO.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "400",
+                                            description = "Bad request.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "500",
+                                            description = "Internal application problems.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    )
+                            }
+                    )
             )
     })
     public RouterFunction<ServerResponse> transactionTypesRouters() {
         return RouterFunctions
-                .route(POST("/api/transaction-types").and(accept(APPLICATION_JSON)), this::saveTransactionType);
+                .route(POST("/api/transaction-types").and(accept(APPLICATION_JSON)), this::saveTransactionType)
+                .andRoute(GET("/api/transaction-types"), this::allTransactionTypes);
     }
 
     public Mono<ServerResponse> saveTransactionType(ServerRequest request) {
@@ -93,6 +128,15 @@ public class TransactionTypeRouter {
                 .flatMap(response ->
                         ServerResponse.ok().contentType(APPLICATION_JSON).bodyValue(response));
 
+    }
+
+    public Mono<ServerResponse> allTransactionTypes(ServerRequest request) {
+        return getAllTransactionTypesHandler.getAll()
+                .collectList()
+                .flatMap(list -> ServerResponse.ok()
+                        .contentType(APPLICATION_JSON)
+                        .bodyValue(list)
+                );
     }
 
 }

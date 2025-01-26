@@ -20,5 +20,4 @@ public class GetAllTransactionsHandler {
                 .map(TransactionModelMapper::mapToDTO);
 
     }
-
 }

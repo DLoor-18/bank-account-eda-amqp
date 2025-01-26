@@ -2,8 +2,10 @@ package ec.com.sofka.router;
 
 import ec.com.sofka.data.AccountRequestDTO;
 import ec.com.sofka.data.AccountResponseDTO;
+import ec.com.sofka.data.TransactionResponseDTO;
 import ec.com.sofka.exceptions.model.ErrorDetails;
 import ec.com.sofka.handlers.account.CreateAccountHandler;
+import ec.com.sofka.handlers.account.GetAllAccountsHandler;
 import ec.com.sofka.validator.RequestValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,10 +31,12 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class AccountRouter {
     private final RequestValidator requestValidator;
     private final CreateAccountHandler createAccountHandler;
+    private final GetAllAccountsHandler getAllAccountsHandler;
 
-    public AccountRouter(RequestValidator requestValidator, CreateAccountHandler createAccountHandler) {
+    public AccountRouter(RequestValidator requestValidator, CreateAccountHandler createAccountHandler, GetAllAccountsHandler getAllAccountsHandler) {
         this.requestValidator = requestValidator;
         this.createAccountHandler = createAccountHandler;
+        this.getAllAccountsHandler = getAllAccountsHandler;
     }
 
     @Bean
@@ -79,11 +83,42 @@ public class AccountRouter {
                                     )
                             }
                     )
+            ),
+            @RouterOperation(
+                    path = "/api/accounts",
+                    produces = {MediaType.APPLICATION_JSON_VALUE},
+                    method = RequestMethod.GET,
+                    beanClass = GetAllAccountsHandler.class,
+                    beanMethod = "getAll",
+                    operation = @Operation(
+                            tags = {"Accounts"},
+                            operationId = "getAllAccounts",
+                            summary = "Get all accounts",
+                            description = "Get all registered accounts.",
+                            responses = {
+                                    @ApiResponse(
+                                            responseCode = "200",
+                                            description = "Successfully obtained all registered accounts.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = AccountResponseDTO.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "400",
+                                            description = "Bad request.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    ),
+                                    @ApiResponse(
+                                            responseCode = "500",
+                                            description = "Internal application problems.",
+                                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                                    )
+                            }
+                    )
             )
     })
     public RouterFunction<ServerResponse> accountsRouters() {
         return RouterFunctions
-                .route(POST("/api/accounts").and(accept(APPLICATION_JSON)), this::saveAccount);
+                .route(POST("/api/accounts").and(accept(APPLICATION_JSON)), this::saveAccount)
+                .andRoute(GET("/api/accounts"), this::allTransactions);
     }
 
     public Mono<ServerResponse> saveAccount(ServerRequest request) {
@@ -95,4 +130,12 @@ public class AccountRouter {
 
     }
 
+    public Mono<ServerResponse> allTransactions(ServerRequest request) {
+        return getAllAccountsHandler.getAll()
+                .collectList()
+                .flatMap(list -> ServerResponse.ok()
+                        .contentType(APPLICATION_JSON)
+                        .bodyValue(list)
+                );
+    }
 }

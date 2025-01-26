@@ -23,7 +23,7 @@ public class JwtService {
 
     private final Environment environment;
     private final static String secretKey = "cc9e5246b722f110a843db98c7e6620e88a177aebc620627bacbb999e08f493f";
-    private final static String timeExpiration = "900000";
+    private final static String timeExpiration = "9000000";
 
     public JwtService(Environment environment) {
         this.environment = environment;

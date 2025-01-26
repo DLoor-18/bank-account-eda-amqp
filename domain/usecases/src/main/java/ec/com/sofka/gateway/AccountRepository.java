@@ -5,11 +5,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface AccountRepository {
-
-    Mono<AccountDTO> save(AccountDTO account);
-
-    Mono<AccountDTO> findByNumber(String number);
-
+    Mono<AccountDTO> save(AccountDTO userDTO);
+    Mono<AccountDTO> findByNumber(String email);
     Flux<AccountDTO> findAll();
-
 }

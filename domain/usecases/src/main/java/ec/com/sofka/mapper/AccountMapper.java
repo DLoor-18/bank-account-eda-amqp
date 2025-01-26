@@ -32,6 +32,7 @@ public class AccountMapper {
         }
 
         return new AccountResponse(
+                account.getId().getValue(),
                 account.getAccountNumber().getValue(),
                 account.getBalance().getValue(),
                 account.getStatus(),
@@ -44,6 +45,7 @@ public class AccountMapper {
         }
 
         return new AccountResponse(
+                account.getId(),
                 account.getAccountNumber(),
                 account.getBalance(),
                 account.getStatus(),

@@ -45,7 +45,7 @@ public class TransactionTypeRouterTest {
         webTestClient = WebTestClient.bindToRouterFunction(transactionTypeRouter.transactionTypesRouters()).build();
 
         transactionTypeRequest = new TransactionTypeRequestDTO("Deposit from branch", "Deposit from branch", new BigDecimal(10), true, false, "ACTIVE");
-        transactionTypeResponse = new TransactionTypeResponseDTO("Deposit from branch", "Deposit from branch", new BigDecimal(10), true, false, "ACTIVE");
+        transactionTypeResponse = new TransactionTypeResponseDTO("1", "Deposit from branch", "Deposit from branch", new BigDecimal(10), true, false, "ACTIVE");
 
     }
 

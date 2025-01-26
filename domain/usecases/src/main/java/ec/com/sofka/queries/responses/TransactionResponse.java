@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class TransactionResponse implements Serializable {
+    private String id;
     private String accountNumber;
     private String details;
     private BigDecimal amount;
@@ -11,13 +12,22 @@ public class TransactionResponse implements Serializable {
     private AccountResponse account;
     private TransactionTypeResponse transactionType;
 
-    public TransactionResponse(String accountNumber, String details, BigDecimal amount, String processingDate, AccountResponse account, TransactionTypeResponse transactionType) {
+    public TransactionResponse(String id, String accountNumber, String details, BigDecimal amount, String processingDate, AccountResponse account, TransactionTypeResponse transactionType) {
+        this.id = id;
         this.accountNumber = accountNumber;
         this.details = details;
         this.amount = amount;
         this.processingDate = processingDate;
         this.account = account;
         this.transactionType = transactionType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAccountNumber() {

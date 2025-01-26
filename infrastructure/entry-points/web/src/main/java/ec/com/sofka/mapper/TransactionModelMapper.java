@@ -31,6 +31,7 @@ public class TransactionModelMapper {
         }
 
         return new TransactionResponseDTO(
+                transaction.getId(),
                 transaction.getAccountNumber(),
                 transaction.getDetails(),
                 transaction.getAmount(),

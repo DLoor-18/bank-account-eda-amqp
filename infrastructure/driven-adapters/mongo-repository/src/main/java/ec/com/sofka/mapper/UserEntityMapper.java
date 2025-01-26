@@ -24,6 +24,7 @@ public class UserEntityMapper {
             return null;
         }
         return new UserDTO(
+                user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getUsername(),

@@ -29,6 +29,7 @@ public class TransactionEntityMapper {
         }
 
         return new TransactionDTO(
+                transactionEntity.getId(),
                 transactionEntity.getAccountNumber(),
                 transactionEntity.getDetails(),
                 transactionEntity.getAmount(),

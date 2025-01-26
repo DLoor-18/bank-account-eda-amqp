@@ -3,7 +3,7 @@ package ec.com.sofka.data;
 import java.io.Serializable;
 
 public class CustomerResponseDTO implements Serializable {
-
+    private String id;
     private String firstName;
     private String lastName;
     private String identityCard;
@@ -12,11 +12,20 @@ public class CustomerResponseDTO implements Serializable {
     public CustomerResponseDTO() {
     }
 
-    public CustomerResponseDTO(String firstName, String lastName, String identityCard, String status) {
+    public CustomerResponseDTO(String id, String firstName, String lastName, String identityCard, String status) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.identityCard = identityCard;
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {

@@ -44,7 +44,7 @@ public class ConsumerRouterTest {
         webTestClient = WebTestClient.bindToRouterFunction(customerRouter.customersRouters()).build();
 
         customerRequestDTO = new CustomerRequestDTO("Juan", "Zambrano", "1000000000", "user@gmail.com", "Customer123.", "ACTIVE");
-        customerResponseDTO = new CustomerResponseDTO("Juan", "Zambrano", "1000000000", "ACTIVE");
+        customerResponseDTO = new CustomerResponseDTO("1", "Juan", "Zambrano", "1000000000", "ACTIVE");
 
     }
 

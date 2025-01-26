@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class AccountResponseDTO implements Serializable {
-
+    private String id;
     private String accountNumber;
     private BigDecimal balance;
     private String status;
@@ -13,11 +13,20 @@ public class AccountResponseDTO implements Serializable {
     public AccountResponseDTO() {
     }
 
-    public AccountResponseDTO(String accountNumber, BigDecimal balance, String status, CustomerResponseDTO customer) {
+    public AccountResponseDTO(String id, String accountNumber, BigDecimal balance, String status, CustomerResponseDTO customer) {
+        this.id = id;
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
         this.customer = customer;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAccountNumber() {

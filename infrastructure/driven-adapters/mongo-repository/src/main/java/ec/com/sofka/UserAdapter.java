@@ -6,6 +6,7 @@ import ec.com.sofka.gateway.dto.UserDTO;
 import ec.com.sofka.mapper.UserEntityMapper;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -30,4 +31,9 @@ public class UserAdapter implements UserRepository {
                 .map(UserEntityMapper::mapToDTO);
     }
 
+    @Override
+    public Flux<UserDTO> findAll() {
+        return userRepository.findAll()
+                .map(UserEntityMapper::mapToDTO);
+    }
 }
