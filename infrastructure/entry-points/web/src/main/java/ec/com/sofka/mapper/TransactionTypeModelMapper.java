@@ -19,8 +19,8 @@ public class TransactionTypeModelMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue(),
-                transactionType.getDiscount(),
                 transactionType.getTransactionCost(),
+                transactionType.getDiscount(),
                 StatusEnum.valueOf(transactionType.getStatus()));
 
     }
@@ -34,7 +34,7 @@ public class TransactionTypeModelMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue(),
-                transactionType.getDiscount(),
+                transactionType.getTransactionCost(),
                 transactionType.getDiscount(),
                 transactionType.getStatus().name()
         );

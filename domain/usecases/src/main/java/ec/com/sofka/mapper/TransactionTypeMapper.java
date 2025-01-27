@@ -20,7 +20,7 @@ public class TransactionTypeMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 Amount.of(transactionType.getValue()),
-                transactionType.getDiscount(),
+                transactionType.getTransactionCost(),
                 transactionType.getDiscount(),
                 transactionType.getStatus()
         );
@@ -35,7 +35,7 @@ public class TransactionTypeMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue().getValue(),
-                transactionType.getDiscount(),
+                transactionType.getTransactionCost(),
                 transactionType.getDiscount(),
                 transactionType.getStatus()
         );
@@ -50,7 +50,7 @@ public class TransactionTypeMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue(),
-                transactionType.getDiscount(),
+                transactionType.getTransactionCost(),
                 transactionType.getDiscount(),
                 transactionType.getStatus()
         );
@@ -65,7 +65,7 @@ public class TransactionTypeMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue().getValue(),
-                transactionType.getDiscount(),
+                transactionType.getTransactionCost(),
                 transactionType.getDiscount(),
                 transactionType.getStatus()
         );
@@ -80,7 +80,7 @@ public class TransactionTypeMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue(),
-                transactionType.getDiscount(),
+                transactionType.getTransactionCost(),
                 transactionType.getDiscount(),
                 transactionType.getStatus()
         );

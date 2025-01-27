@@ -16,8 +16,8 @@ public class TransactionTypeEntityMapper {
                 transactionType.getType(),
                 transactionType.getDescription(),
                 transactionType.getValue(),
-                transactionType.getDiscount(),
                 transactionType.getTransactionCost(),
+                transactionType.getDiscount(),
                 transactionType.getStatus());
     }
 
@@ -30,10 +30,9 @@ public class TransactionTypeEntityMapper {
                 transactionTypeEntity.getType(),
                 transactionTypeEntity.getDescription(),
                 transactionTypeEntity.getValue(),
-                transactionTypeEntity.getDiscount(),
+                transactionTypeEntity.getTransactionCost(),
                 transactionTypeEntity.getDiscount(),
                 transactionTypeEntity.getStatus()
         );
     }
-
 }
