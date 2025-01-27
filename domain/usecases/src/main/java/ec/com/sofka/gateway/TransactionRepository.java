@@ -10,6 +10,8 @@ public interface TransactionRepository {
 
     Mono<TransactionDTO> findById(String id);
 
+    Flux<TransactionDTO> findByAccountNumber(String numberAccount);
+
     Flux<TransactionDTO> findAll();
 
 }

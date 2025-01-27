@@ -9,6 +9,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -35,11 +36,12 @@ public class GlobalErrorExceptionHandler implements ErrorWebExceptionHandler {
             RecordNotFoundException.class, ex -> new ErrorDetails(HttpStatus.NOT_FOUND.value(), ex.getMessage(), new Date()),
             InvalidFieldException.class, ex -> new ErrorDetails(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), new Date()),
             ExpiredJwtException.class, ex -> new ErrorDetails(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), new Date()),
-            UsernameNotFoundException.class, ex -> new ErrorDetails(HttpStatus.UNAUTHORIZED.value(), ex.getMessage(), new Date()),
+            UsernameNotFoundException.class, ex -> new ErrorDetails(HttpStatus.FORBIDDEN.value(), ex.getMessage(), new Date()),
             RequestValidationException.class, ex -> {
                 List<String> errors = ((RequestValidationException) ex).getErrors();
                 return new ErrorDetails(HttpStatus.UNPROCESSABLE_ENTITY.value(), String.join(", ", errors), new Date());
             },
+            BadCredentialsException.class, ex -> new ErrorDetails(HttpStatus.FORBIDDEN.value(), ex.getMessage(), new Date()),
             InternalServerException.class, ex -> new ErrorDetails(HttpStatus.INTERNAL_SERVER_ERROR.value(), "An unexpected error occurred.",new Date())
     );
 

@@ -9,6 +9,7 @@ public interface IEventStore {
     Mono<DomainEvent> save(DomainEvent event);
 
     Flux<DomainEvent> findAggregate(String aggregateId);
+    Flux<DomainEvent> findAggregateByEntityId(String entityId);
 
     Flux<DomainEvent> findAllAggregates();
 

@@ -1,5 +1,6 @@
 package ec.com.sofka.aggregates.account;
 
+import ec.com.sofka.aggregates.account.entities.account.values.AccountId;
 import ec.com.sofka.aggregates.account.handlers.AccountHandler;
 import ec.com.sofka.aggregates.account.handlers.TransactionHandler;
 import ec.com.sofka.aggregates.account.handlers.TransactionTypeHandler;
@@ -43,23 +44,28 @@ public class AccountAggregate extends AggregateRoot<AccountAggregateId> {
     }
 
     public void createCustomer(String firstName, String lastName, String identityCard, StatusEnum statusEnum) {
-        addEvent(new CustomerCreated(new CustomerId().getValue(), firstName, lastName, identityCard, statusEnum)).apply();
+        CustomerId customerId = new CustomerId();
+        addEvent(new CustomerCreated(customerId.getValue(), firstName, lastName, identityCard, statusEnum), customerId.getValue()).apply();
     }
 
     public void createTransactionType(String type, String description, BigDecimal value, Boolean transactionCost, Boolean discount, StatusEnum statusEnum) {
-        addEvent(new TransactionTypeCreated(new TransactionTypeId().getValue(), type, description, value, transactionCost, discount, statusEnum)).apply();
+        TransactionTypeId transactionTypeId = new TransactionTypeId();
+        addEvent(new TransactionTypeCreated(transactionTypeId.getValue(), type, description, value, transactionCost, discount, statusEnum), transactionTypeId.getValue()).apply();
     }
 
     public void createAccount(String accountNumber, BigDecimal balance, StatusEnum statusEnum, Customer customer) {
-        addEvent(new AccountCreated(new AccountAggregateId().getValue(), accountNumber, balance, statusEnum, customer)).apply();
+        AccountId accountId = new AccountId();
+        addEvent(new AccountCreated(accountId.getValue(), accountNumber, balance, statusEnum, customer), accountId.getValue()).apply();
     }
 
     public void updateAccount(String accountId, String accountNumber, BigDecimal balance, StatusEnum statusEnum, Customer customer) {
-        addEvent(new AccountUpdated(AccountAggregateId.of(accountId).getValue(), accountNumber, balance, statusEnum, customer)).apply();
+        AccountId accountUpdateId = AccountId.of(accountId);
+        addEvent(new AccountUpdated(accountUpdateId.getValue(), accountNumber, balance, statusEnum, customer), accountUpdateId.getValue()).apply();
     }
 
     public void createTransaction(String transactionAccount, String details, BigDecimal amount, String processingDate, Account account, TransactionType transactionType) {
-        addEvent(new TransactionCreated(new TransactionId().getValue(), transactionAccount, details, amount, processingDate, account, transactionType)).apply();
+        TransactionId transactionId = new TransactionId();
+        addEvent(new TransactionCreated(transactionId.getValue(), transactionAccount, details, amount, processingDate, account, transactionType), transactionId.getValue()).apply();
     }
 
     public static AccountAggregate from(final String id, List<DomainEvent> events) {
@@ -67,7 +73,17 @@ public class AccountAggregate extends AggregateRoot<AccountAggregateId> {
         events.stream()
                 .filter(event -> id.equals(event.getAggregateRootId()))
                 .reduce((first, second) -> second)
-                .ifPresent(event -> accountAggregate.addEvent(event).apply());
+                .ifPresent(event -> accountAggregate.addEvent(event, null).apply());
+        accountAggregate.markEventsAsCommitted();
+        return accountAggregate;
+    }
+
+    public static AccountAggregate fromByEntityId(final String id, final String entityId, List<DomainEvent> events) {
+        AccountAggregate accountAggregate = new AccountAggregate(id);
+        events.stream()
+                .filter(event -> entityId.equals(event.getEntityId()))
+                .reduce((first, second) -> second)
+                .ifPresent(event -> accountAggregate.addEvent(event, entityId).apply());
         accountAggregate.markEventsAsCommitted();
         return accountAggregate;
     }

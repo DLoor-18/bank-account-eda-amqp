@@ -11,16 +11,16 @@ public class TransactionCommand extends Command {
     private String accountNumber;
     private String details;
     private String transactionTypeId;
-    private String accountAggregateId;
+    private String accountId;
 
-    public TransactionCommand(BigDecimal amount, String processingDate, String accountNumber, String details, String transactionTypeId, String accountAggregateId) {
+    public TransactionCommand(BigDecimal amount, String processingDate, String accountNumber, String details, String transactionTypeId, String accountId) {
         super(null);
         this.amount = amount;
         this.processingDate = processingDate;
         this.accountNumber = accountNumber;
         this.details = details;
         this.transactionTypeId = transactionTypeId;
-        this.accountAggregateId = accountAggregateId;
+        this.accountId = accountId;
     }
 
     public BigDecimal getAmount() {
@@ -63,11 +63,11 @@ public class TransactionCommand extends Command {
         this.transactionTypeId = transactionTypeId;
     }
 
-    public String getAccountAggregateId() {
-        return accountAggregateId;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setAccountAggregateId(String accountAggregateId) {
-        this.accountAggregateId = accountAggregateId;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

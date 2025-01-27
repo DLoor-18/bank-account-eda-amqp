@@ -26,7 +26,7 @@ public abstract class AggregateRoot<I extends Identity> extends Entity<I> {
         actionsHandler.subscribe(container);
     }
 
-    protected IEvent addEvent(final DomainEvent event) {
+    protected IEvent addEvent(final DomainEvent event, String entityId) {
         final String aggregateName = this.getId()
                 .getClass()
                 .getSimpleName()
@@ -34,6 +34,7 @@ public abstract class AggregateRoot<I extends Identity> extends Entity<I> {
                 .toLowerCase();
         event.setAggregateRootId(getId().getValue());
         event.setAggregateRootName(aggregateName);
+        event.setEntityId(entityId);
 
         return actionsHandler.append(event);
     }

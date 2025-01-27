@@ -8,6 +8,7 @@ public abstract class DomainEvent {
     private final String eventId;
     private final String eventType;
 
+    private String entityId;
     private String aggregateRootId;
     private String aggregateRootName;
 
@@ -18,6 +19,14 @@ public abstract class DomainEvent {
         this.eventId = UUID.randomUUID().toString();
         this.eventType = eventType;
         this.version = 1L;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
     }
 
     public Instant getWhen() {

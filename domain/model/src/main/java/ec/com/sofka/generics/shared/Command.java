@@ -1,6 +1,8 @@
 package ec.com.sofka.generics.shared;
 
-public abstract class Command {
+import ec.com.sofka.generics.interfaces.ICommandBase;
+
+public abstract class Command implements ICommandBase {
     private final String aggregateId;
 
     protected Command(String aggregateId) {

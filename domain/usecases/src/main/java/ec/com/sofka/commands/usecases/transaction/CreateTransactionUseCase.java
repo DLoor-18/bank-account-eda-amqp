@@ -1,6 +1,7 @@
 package ec.com.sofka.commands.usecases.transaction;
 
 import ec.com.sofka.aggregates.account.AccountAggregate;
+import ec.com.sofka.commands.AccountEntityCommand;
 import ec.com.sofka.queries.query.transcationType.FindTransactionTypeByIdUseCase;
 import ec.com.sofka.commands.usecases.account.UpdateAccountUseCase;
 import ec.com.sofka.gateway.IEventStore;
@@ -51,11 +52,11 @@ public class CreateTransactionUseCase implements IUseCaseExecute<TransactionComm
                                 null,
                                 transactionType))
                 .flatMap(transactionDTO -> validateTransaction.validateTransaction(transactionDTO, transactionCommand.getAccountNumber()))
-                .flatMap(transactionDTO -> updateBalanceAndSave(transactionDTO, transactionCommand.getAccountAggregateId()));
+                .flatMap(transactionDTO -> updateBalanceAndSave(transactionDTO, transactionCommand.getAccountId()));
 
     }
 
-    public Mono<TransactionResponse> updateBalanceAndSave(TransactionDTO transaction, String accountAggregateId) {
+    public Mono<TransactionResponse> updateBalanceAndSave(TransactionDTO transaction, String accountId) {
         AccountAggregate accountAggregate = new AccountAggregate();
 
         BigDecimal newBalance = balanceCalculator.calculate(transaction, transaction.getAccount().getBalance());
@@ -71,8 +72,9 @@ public class CreateTransactionUseCase implements IUseCaseExecute<TransactionComm
                 TransactionTypeMapper.mapToModelFromDTO(transaction.getTransactionType())
         );
 
-        AccountCommand accountCommand = new AccountCommand(
-                accountAggregateId,
+
+        AccountEntityCommand accountCommand = new AccountEntityCommand(
+                accountId,
                 transaction.getAccount().getAccountNumber(),
                 transaction.getAccount().getBalance(),
                 transaction.getAccount().getStatus(),

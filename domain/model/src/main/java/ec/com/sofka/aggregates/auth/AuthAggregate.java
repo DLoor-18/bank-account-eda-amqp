@@ -26,11 +26,13 @@ public class AuthAggregate extends AggregateRoot<AuthAggregateId> {
     }
 
     public void createUser(String firstName, String lastName, String email, String password, RoleEnum role){
-        addEvent(new UserCreated(new UserId().getValue(), firstName, lastName, email, password, role));
+        UserId userId = new UserId();
+        addEvent(new UserCreated(userId.getValue(), firstName, lastName, email, password, role), userId.getValue());
     }
 
     public void updateUser(String userId, String firstName, String lastName, String email, String password, RoleEnum role){
-        addEvent(new UserUpdated(UserId.of(userId).getValue(), firstName, lastName, email, password, role));
+        UserId userUpdateId = UserId.of(userId);
+        addEvent(new UserUpdated(userUpdateId.getValue(), firstName, lastName, email, password, role), userUpdateId.getValue());
     }
 
     public static AuthAggregate from(final String id, List<DomainEvent> events) {
@@ -38,7 +40,7 @@ public class AuthAggregate extends AggregateRoot<AuthAggregateId> {
         events.stream()
                 .filter(event -> id.equals(event.getAggregateRootId()))
                 .reduce((first, second) -> second)
-                .ifPresent(event -> authAggregate.addEvent(event).apply());
+                .ifPresent(event -> authAggregate.addEvent(event, "").apply());
         authAggregate.markEventsAsCommitted();
         return authAggregate;
     }

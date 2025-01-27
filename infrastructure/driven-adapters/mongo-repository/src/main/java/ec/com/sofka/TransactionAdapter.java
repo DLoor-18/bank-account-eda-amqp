@@ -32,6 +32,12 @@ public class TransactionAdapter implements TransactionRepository {
     }
 
     @Override
+    public Flux<TransactionDTO> findByAccountNumber(String accountNumber) {
+        return transactionRepository.findByAccountNumber(accountNumber)
+                .map(TransactionEntityMapper::mapToDTO);
+    }
+
+    @Override
     public Flux<TransactionDTO> findAll() {
         return transactionRepository.findAll()
                 .map(TransactionEntityMapper::mapToDTO);

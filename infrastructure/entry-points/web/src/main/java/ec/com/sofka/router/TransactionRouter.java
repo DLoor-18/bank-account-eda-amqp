@@ -1,9 +1,11 @@
 package ec.com.sofka.router;
 
+import ec.com.sofka.data.PropertyRequestDTO;
 import ec.com.sofka.data.TransactionRequestDTO;
 import ec.com.sofka.data.TransactionResponseDTO;
 import ec.com.sofka.exceptions.model.ErrorDetails;
 import ec.com.sofka.handlers.transaction.CreateTransactionHandler;
+import ec.com.sofka.handlers.transaction.FindTransactionsByAccountNumberHandler;
 import ec.com.sofka.handlers.transaction.GetAllTransactionsHandler;
 import ec.com.sofka.validator.RequestValidator;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,11 +33,13 @@ public class TransactionRouter {
     private final RequestValidator requestValidator;
     private final CreateTransactionHandler createTransactionHandler;
     private final GetAllTransactionsHandler getAllTransactionsHandler;
+    private final FindTransactionsByAccountNumberHandler findTransactionsByAccountNumberHandler;
 
-    public TransactionRouter(RequestValidator requestValidator, CreateTransactionHandler createTransactionHandler, GetAllTransactionsHandler getAllTransactionsHandler) {
+    public TransactionRouter(RequestValidator requestValidator, CreateTransactionHandler createTransactionHandler, GetAllTransactionsHandler getAllTransactionsHandler, FindTransactionsByAccountNumberHandler findTransactionsByAccountNumberHandler) {
         this.requestValidator = requestValidator;
         this.createTransactionHandler = createTransactionHandler;
         this.getAllTransactionsHandler = getAllTransactionsHandler;
+        this.findTransactionsByAccountNumberHandler = findTransactionsByAccountNumberHandler;
     }
 
     @Bean
@@ -111,12 +115,50 @@ public class TransactionRouter {
                                     )
                             }
                     )
+            ),@RouterOperation(
+            path = "/api/transactions/number-account",
+            method = RequestMethod.POST,
+            produces = {MediaType.APPLICATION_JSON_VALUE},
+            beanClass = FindTransactionsByAccountNumberHandler.class,
+            beanMethod = "findTransactionsByAccountNumber",
+            operation = @Operation(
+                    tags = {"Transactions"},
+                    operationId = "findTransactionsByAccountNumber",
+                    summary = "Find transactions by account number",
+                    description = "Find by account number registered transactions.",
+                    requestBody = @RequestBody(
+                            description = "Details of the required.",
+                            required = true,
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = PropertyRequestDTO.class)
+                            )
+                    ),
+                    responses = {
+                            @ApiResponse(
+                                    responseCode = "200",
+                                    description = "Successfully obtained registered transactions.",
+                                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = TransactionResponseDTO.class))
+                            ),
+                            @ApiResponse(
+                                    responseCode = "400",
+                                    description = "Bad request.",
+                                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                            ),
+                            @ApiResponse(
+                                    responseCode = "500",
+                                    description = "Internal application problems.",
+                                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class))
+                            )
+                    }
             )
+    )
     })
     public RouterFunction<ServerResponse> transactionsRouters() {
         return RouterFunctions
                 .route(POST("/api/transactions").and(accept(APPLICATION_JSON)), this::saveTransaction)
-                .andRoute(GET("/api/transactions"), this::allTransactions);
+                .andRoute(GET("/api/transactions"), this::allTransactions)
+                .andRoute(POST("/api/transactions/number-account").and(accept(APPLICATION_JSON)), this::findTransactionByAccountNumber);
     }
 
     public Mono<ServerResponse> saveTransaction(ServerRequest request) {
@@ -130,6 +172,17 @@ public class TransactionRouter {
 
     public Mono<ServerResponse> allTransactions(ServerRequest request) {
         return getAllTransactionsHandler.getAll()
+                .collectList()
+                .flatMap(list -> ServerResponse.ok()
+                        .contentType(APPLICATION_JSON)
+                        .bodyValue(list)
+                );
+    }
+
+    public Mono<ServerResponse> findTransactionByAccountNumber(ServerRequest request) {
+        return request.bodyToMono(PropertyRequestDTO.class)
+                .doOnNext(requestValidator::validate)
+                .flatMapMany(findTransactionsByAccountNumberHandler::findByAccountNumber)
                 .collectList()
                 .flatMap(list -> ServerResponse.ok()
                         .contentType(APPLICATION_JSON)

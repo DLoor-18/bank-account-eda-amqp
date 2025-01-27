@@ -25,6 +25,10 @@ public class FindAccountByNumberUseCase implements IUseCaseGetElement<PropertyQu
     public Mono<QueryResponse<AccountResponse>> get(PropertyQuery request) {
 
         return getByNumberAccount(request.getProperty())
+                .switchIfEmpty(Mono.defer(() -> {
+                    errorBusMessage.sendMsg(new ErrorMessage("Account not found", "Get Account by NumberAccount"));
+                    return Mono.error(new RecordNotFoundException("Account not found."));
+                }))
                 .map(AccountMapper::mapToResponseFromModel)
                 .flatMap(accountResponse -> Mono.just(QueryResponse.ofSingle(accountResponse)));
 
@@ -32,10 +36,6 @@ public class FindAccountByNumberUseCase implements IUseCaseGetElement<PropertyQu
 
     public Mono<Account> getByNumberAccount(String numberAccount) {
         return accountRepository.findByNumber(numberAccount)
-                .switchIfEmpty(Mono.defer(() -> {
-                    errorBusMessage.sendMsg(new ErrorMessage("Account not found", "Get Account by NumberAccount"));
-                    return Mono.error(new RecordNotFoundException("Account not found."));
-                }))
                 .map(AccountMapper::mapToModelFromDTO);
     }
 

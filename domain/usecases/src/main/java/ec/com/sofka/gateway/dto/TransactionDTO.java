@@ -8,27 +8,27 @@ public class TransactionDTO {
     private String details;
     private BigDecimal amount;
     private String processingDate;
-    private AccountDTO accountDTO;
+    private AccountDTO account;
     private TransactionTypeDTO transactionType;
 
     public TransactionDTO(){}
 
-    public TransactionDTO(String id, String accountNumber, String details, BigDecimal amount, String processingDate, AccountDTO accountDTO, TransactionTypeDTO transactionType) {
+    public TransactionDTO(String id, String accountNumber, String details, BigDecimal amount, String processingDate, AccountDTO account, TransactionTypeDTO transactionType) {
         this.id = id;
         this.accountNumber = accountNumber;
         this.details = details;
         this.amount = amount;
         this.processingDate = processingDate;
-        this.accountDTO = accountDTO;
+        this.account = account;
         this.transactionType = transactionType;
     }
 
-    public TransactionDTO(String accountNumber, String details, BigDecimal amount, String processingDate, AccountDTO accountDTO, TransactionTypeDTO transactionType) {
+    public TransactionDTO(String accountNumber, String details, BigDecimal amount, String processingDate, AccountDTO account, TransactionTypeDTO transactionType) {
         this.accountNumber = accountNumber;
         this.details = details;
         this.amount = amount;
         this.processingDate = processingDate;
-        this.accountDTO = accountDTO;
+        this.account = account;
         this.transactionType = transactionType;
     }
 
@@ -73,11 +73,11 @@ public class TransactionDTO {
     }
 
     public AccountDTO getAccount() {
-        return accountDTO;
+        return account;
     }
 
     public void setAccount(AccountDTO accountDTOEntity) {
-        this.accountDTO = accountDTOEntity;
+        this.account = accountDTOEntity;
     }
 
     public TransactionTypeDTO getTransactionType() {

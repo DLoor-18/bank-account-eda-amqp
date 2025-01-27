@@ -17,6 +17,9 @@ public class EventEntity {
     @Field("aggregate_id")
     private String aggregateId;
 
+    @Field("entity_id")
+    private String entityId;
+
     @Field("event_type")
     private String eventType;
 
@@ -31,9 +34,10 @@ public class EventEntity {
 
     public EventEntity(){}
 
-    public EventEntity(String id, String aggregateId, String eventType, String eventData, String timestamp, Long version) {
+    public EventEntity(String id, String aggregateId, String entityId, String eventType, String eventData, String timestamp, Long version) {
         this.id = id;
         this.aggregateId = aggregateId;
+        this.entityId = entityId;
         this.eventType = eventType;
         this.eventData = eventData;
         this.timestamp = timestamp;
@@ -71,6 +75,14 @@ public class EventEntity {
 
     public void setAggregateId(String aggregateId) {
         this.aggregateId = aggregateId;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
     }
 
     public String getEventType() {
